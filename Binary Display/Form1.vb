@@ -5,6 +5,9 @@ Imports System.Text
 
 Public Class Form1
 
+    ' TODO: have a sound file loop continuously after loading.
+    ' This would be a background sound effect.
+    ' By always having a sound playing, overlapping sounds would be instantaneous.
 
     Private Player As AudioPlayer
 
