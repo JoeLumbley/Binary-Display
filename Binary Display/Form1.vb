@@ -92,7 +92,7 @@ Public Class Form1
             'For i = 0 To 7
             '    Dim rect = bitRects(i)
             Dim placeValue = CStr(2 ^ (7 - i))
-            g.DrawString(placeValue, placeValueFont, placeValueBrush, rect.X + BitBoxSize \ 2, rect.Y - 100, AlineCenter)
+            g.DrawString(placeValue, placeValueFont, placeValueBrush, rect.X + BitBoxSize \ 2, rect.Y - Me.ClientSize.Height \ 12, AlineCenter)
 
             'Next
 
@@ -102,7 +102,7 @@ Public Class Form1
         Dim binaryStr = String.Join("", bits.Select(Function(b) If(b, "1", "0")))
         Dim decimalVal = Convert.ToInt32(binaryStr, 2)
         'g.DrawString($"Binary: {binaryStr}", font, Brushes.White, StartX, StartY + BitBoxSize + 20)
-        g.DrawString($"{decimalVal}", BitBoxFont, Brushes.White, ClientSize.Width \ 2, StartY - 300, AlineCenter)
+        g.DrawString($"{decimalVal}", BitBoxFont, Brushes.White, ClientSize.Width \ 2, StartY - Me.ClientSize.Height \ 4, AlineCenter)
 
 
 
@@ -117,7 +117,7 @@ Public Class Form1
             Dim breakdown = String.Join(" + ", activeValues)
             'Dim breakdownFont = New Font("Consolas", 55)
             Dim breakdownBrush = Brushes.DarkGray
-            g.DrawString($"{breakdown} = {decimalVal}", breakdownFont, breakdownBrush, ClientSize.Width \ 2, StartY + BitBoxSize + 20, AlineCenter)
+            g.DrawString($"{breakdown} = {decimalVal}", breakdownFont, breakdownBrush, ClientSize.Width \ 2, StartY + Me.ClientSize.Height \ 6, AlineCenter)
         End If
 
     End Sub
@@ -189,11 +189,11 @@ Public Class Form1
 
         'BitBoxFont = New Font("Consolas", Math.Min(200, Me.ClientSize.Height \ 8))
         'BitBoxFont = New Font("Consolas", Math.Max(12, Math.Min(200, Me.ClientSize.Height \ 8)))
-        BitBoxFont = New Font("Consolas", Math.Max(23, Me.ClientSize.Height \ 8))
+        BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 12))
 
-        placeValueFont = New Font("Consolas", Math.Max(10, Me.ClientSize.Height \ 18))
+        placeValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
 
-        breakdownFont = New Font("Consolas", Math.Max(10, Me.ClientSize.Height \ 18))
+        breakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
 
 
         Me.Invalidate()
