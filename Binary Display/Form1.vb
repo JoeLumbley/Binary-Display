@@ -37,6 +37,7 @@ Public Class Form1
         Player.SetVolumeOverlapping("CashCollected", 900)
 
 
+        MinimumSize = New Size(1280, 720)
 
         BackColor = Color.Black
         Me.KeyPreview = True
@@ -117,7 +118,7 @@ Public Class Form1
             Dim breakdown = String.Join(" + ", activeValues)
             'Dim breakdownFont = New Font("Consolas", 55)
             Dim breakdownBrush = Brushes.DarkGray
-            g.DrawString($"{breakdown} = {decimalVal}", breakdownFont, breakdownBrush, ClientSize.Width \ 2, StartY + Me.ClientSize.Height \ 6, AlineCenter)
+            g.DrawString($"{breakdown} = {decimalVal}", breakdownFont, breakdownBrush, ClientSize.Width \ 2, StartY + Me.ClientSize.Height \ 4, AlineCenter)
         End If
 
     End Sub
@@ -175,7 +176,7 @@ Public Class Form1
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
 
-        BitBoxSize = Math.Max(32, Me.ClientSize.Height \ 6)
+        BitBoxSize = Math.Max(32, Me.ClientSize.Height \ 5)
 
         BitSpacing = Math.Max(5, Me.ClientSize.Height \ 42)
 
