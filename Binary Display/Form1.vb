@@ -5,13 +5,7 @@ Imports System.Text
 
 Public Class Form1
 
-    ' TODO: have a sound file loop continuously after loading.
-    ' This would be a background sound effect.
-    ' By always having a sound playing, overlapping sounds would be instantaneous.
-
     Private Player As AudioPlayer
-
-
 
     Private bits(7) As Boolean
     Private bitRects(7) As Rectangle
@@ -23,8 +17,7 @@ Public Class Form1
     Dim BitBoxFont As New Font("Consolas", 128)
     Dim placeValueFont = New Font("Consolas", 55)
     Dim breakdownFont = New Font("Consolas", 55)
-
-
+    Dim DecimalFont = New Font("Consolas", 72)
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -34,24 +27,22 @@ Public Class Form1
 
         Player.AddOverlapping("CashCollected", FilePath)
 
-        Player.SetVolumeOverlapping("CashCollected", 900)
+        Player.SetVolumeOverlapping("CashCollected", 1000)
 
         FilePath = Path.Combine(Application.StartupPath, "ComputerPulsation.mp3")
 
         Player.AddSound("ComputerPulsation", FilePath)
 
-        Player.SetVolume("ComputerPulsation", 300)
+        Player.SetVolume("ComputerPulsation", 100)
 
-        MinimumSize = New Size(1280, 720)
+        MinimumSize = New Size(720, 480)
 
         BackColor = Color.Black
-        Me.KeyPreview = True
-        Me.DoubleBuffered = True
-        'Me.ClientSize = New Size(8 * (BitBoxSize + BitSpacing) + 40, 120)
-        'Me.ClientSize = New Size(1200, 600)
-        Me.WindowState = FormWindowState.Maximized
+        KeyPreview = True
+        DoubleBuffered = True
+        WindowState = FormWindowState.Maximized
 
-        Me.Text = "8-Bit Binary Display"
+        Text = "8-Bit Binary Display - Code with Joe"
 
         For i = 0 To 7
             bitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing), StartY, BitBoxSize, BitBoxSize)
@@ -61,12 +52,11 @@ Public Class Form1
 
     End Sub
 
-
-
-
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         MyBase.OnPaint(e)
+
         Dim g = e.Graphics
+
         'Dim BitBoxFont = New Font("Consolas", 128)
         Dim brushOn = Brushes.Lime
         Dim brushOff = Brushes.DarkGray
@@ -86,34 +76,21 @@ Public Class Form1
             Dim rect = bitRects(i)
             g.FillRectangle(If(bits(i), brushOn, brushOff), rect)
             g.DrawRectangle(pen, rect)
-            'g.DrawString(If(bits(i), "1", "0"), font, Brushes.Black, rect.X + 10, rect.Y + 5)
 
             'Centered horizontally and vertically inside of the bit boxes
             g.DrawString(If(bits(i), "1", "0"), BitBoxFont, If(bits(i), TextbrushOn, TextbrushOff), rect.X + (BitBoxSize - g.MeasureString(If(bits(i), "1", "0"), BitBoxFont).Width) / 2, rect.Y + (BitBoxSize - g.MeasureString(If(bits(i), "1", "0"), BitBoxFont).Height) / 2)
 
-
-            'Dim placeValueFont = New Font("Consolas", 55)
             Dim placeValueBrush = Brushes.LightGray
 
-
-
-            'For i = 0 To 7
-            '    Dim rect = bitRects(i)
             Dim placeValue = CStr(2 ^ (7 - i))
             g.DrawString(placeValue, placeValueFont, placeValueBrush, rect.X + BitBoxSize \ 2, rect.Y - Me.ClientSize.Height \ 12, AlineCenter)
 
-            'Next
-
         Next
 
-        ' Draw binary string and decimal value
+        ' Draw decimal value
         Dim binaryStr = String.Join("", bits.Select(Function(b) If(b, "1", "0")))
         Dim decimalVal = Convert.ToInt32(binaryStr, 2)
-        'g.DrawString($"Binary: {binaryStr}", font, Brushes.White, StartX, StartY + BitBoxSize + 20)
-        g.DrawString($"{decimalVal}", BitBoxFont, Brushes.White, ClientSize.Width \ 2, StartY - Me.ClientSize.Height \ 4, AlineCenter)
-
-
-
+        g.DrawString($"{decimalVal}", DecimalFont, Brushes.White, ClientSize.Width \ 2, StartY - Me.ClientSize.Height \ 3, AlineCenter)
 
         ' Show the place values adding up to the decimal value.
         Dim activeValues = New List(Of Integer)
@@ -123,7 +100,6 @@ Public Class Form1
 
         If activeValues.Count > 1 Then
             Dim breakdown = String.Join(" + ", activeValues)
-            'Dim breakdownFont = New Font("Consolas", 55)
             Dim breakdownBrush = Brushes.DarkGray
             g.DrawString($"{breakdown} = {decimalVal}", breakdownFont, breakdownBrush, ClientSize.Width \ 2, StartY + Me.ClientSize.Height \ 4, AlineCenter)
         End If
@@ -145,14 +121,10 @@ Public Class Form1
         Next
     End Sub
 
-
-
-
     Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
         MyBase.OnKeyDown(e)
 
         Dim currentValue = Convert.ToInt32(String.Join("", bits.Select(Function(b) If(b, "1", "0"))), 2)
-
 
         If e.KeyCode = Keys.Up Then
             If currentValue < 255 Then
@@ -183,10 +155,9 @@ Public Class Form1
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
 
-        BitBoxSize = Math.Max(32, Me.ClientSize.Height \ 5)
+        BitBoxSize = Math.Max(32, Me.ClientSize.Height \ 6)
 
         BitSpacing = Math.Max(5, Me.ClientSize.Height \ 42)
-
 
         StartX = (Me.ClientSize.Width - (8 * (BitBoxSize + BitSpacing) - BitSpacing)) \ 2
         StartY = (Me.ClientSize.Height) \ 2 - (BitBoxSize \ 2)
@@ -195,14 +166,10 @@ Public Class Form1
             bitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing), StartY, BitBoxSize, BitBoxSize)
         Next
 
-        'BitBoxFont = New Font("Consolas", Math.Min(200, Me.ClientSize.Height \ 8))
-        'BitBoxFont = New Font("Consolas", Math.Max(12, Math.Min(200, Me.ClientSize.Height \ 8)))
-        BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 12))
-
-        placeValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
-
-        breakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
-
+        BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 11))
+        placeValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
+        breakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
+        DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 8))
 
         Me.Invalidate()
 
@@ -239,12 +206,6 @@ Public Class Form1
     End Sub
 
 End Class
-
-
-
-
-
-
 
 Public Structure AudioPlayer
 
