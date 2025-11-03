@@ -74,6 +74,7 @@ Public Class Form1
         ' Draw bit boxes
         For i = 0 To 7
             Dim rect = bitRects(i)
+
             g.FillRectangle(If(bits(i), brushOn, brushOff), rect)
             g.DrawRectangle(pen, rect)
 
@@ -114,6 +115,7 @@ Public Class Form1
                 Player.PlayOverlapping("CashCollected")
 
                 bits(i) = Not bits(i)
+
                 Me.Invalidate()
 
                 Exit For
@@ -136,7 +138,6 @@ Public Class Form1
             If currentValue > 0 Then
                 currentValue -= 1
                 Player.PlayOverlapping("CashCollected")
-
             End If
 
         Else
