@@ -36,6 +36,11 @@ Public Class Form1
 
         Player.SetVolumeOverlapping("CashCollected", 900)
 
+        FilePath = Path.Combine(Application.StartupPath, "ComputerPulsation.mp3")
+
+        Player.AddSound("ComputerPulsation", FilePath)
+
+        Player.SetVolume("ComputerPulsation", 300)
 
         MinimumSize = New Size(1280, 720)
 
@@ -51,6 +56,8 @@ Public Class Form1
         For i = 0 To 7
             bitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing), StartY, BitBoxSize, BitBoxSize)
         Next
+
+        Player.LoopSound("ComputerPulsation")
 
     End Sub
 
@@ -206,6 +213,10 @@ Public Class Form1
         Dim FilePath As String = Path.Combine(Application.StartupPath, "CashCollected.mp3")
 
         CreateFileFromResource(FilePath, My.Resources.Resource1.CashCollected)
+
+        FilePath = Path.Combine(Application.StartupPath, "ComputerPulsation.mp3")
+
+        CreateFileFromResource(FilePath, My.Resources.Resource1.computer_pulsation)
 
     End Sub
 
