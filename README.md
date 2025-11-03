@@ -9,7 +9,7 @@ A playful, interactive educational tool for visualizing binary numbers and their
 
 - **Interactive Bit Toggling**: Click any of the 8 bit boxes to toggle between 0 and 1. Each change updates the binary string and decimal value instantly.
 - **Keyboard Controls**: Use ↑ and ↓ keys to increment or decrement the binary value. Smooth transitions with auditory feedback.
-- **Visual Breakdown**: Displays the decimal value and its binary decomposition (e.g., `128 + 64 + 2 = 194`) for deeper understanding.
+- **Visual Breakdown**: Displays the decimal value and its binary decomposition (e.g., `32 + 8 + 2 = 42`) for deeper understanding.
 - **Place Value Labels**: Each bit box is annotated with its corresponding power-of-two value (e.g., 128, 64, ..., 1).
 - **Responsive Layout**: Automatically scales fonts and layout for HD/UHD resolutions and window resizing.
 - **Ambient Sound Loop**: Background "ComputerPulsation" audio loops continuously to create an immersive experience.
