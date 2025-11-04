@@ -39,3 +39,4 @@ This app is ideal for:
 
 
 
+<img width="1920" height="1080" alt="002" src="https://github.com/user-attachments/assets/a979c2a7-d916-459f-8fa6-d36e0ffe7f89" />
