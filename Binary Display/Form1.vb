@@ -1,4 +1,5 @@
-﻿Imports System.Drawing
+﻿Imports System.ComponentModel
+Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
@@ -57,7 +58,6 @@ Public Class Form1
 
         Dim g = e.Graphics
 
-        'Dim BitBoxFont = New Font("Consolas", 128)
         Dim brushOn = Brushes.Lime
         Dim brushOff = Brushes.DarkGray
 
@@ -173,6 +173,12 @@ Public Class Form1
         DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 8))
 
         Me.Invalidate()
+
+    End Sub
+
+    Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+
+        Player.CloseSounds()
 
     End Sub
 
