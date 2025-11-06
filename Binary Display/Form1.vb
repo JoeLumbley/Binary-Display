@@ -22,6 +22,8 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Player = New AudioPlayer
+
         CreateSoundFiles()
 
         Dim FilePath As String = Path.Combine(Application.StartupPath, "CashCollected.mp3")
@@ -46,7 +48,10 @@ Public Class Form1
         Text = "8-Bit Binary Display - Code with Joe"
 
         For i = 0 To 7
-            bitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing), StartY, BitBoxSize, BitBoxSize)
+            bitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing),
+                                        StartY,
+                                        BitBoxSize,
+                                        BitBoxSize)
         Next
 
         Player.LoopSound("ComputerPulsation")
@@ -79,19 +84,35 @@ Public Class Form1
             g.DrawRectangle(pen, rect)
 
             'Centered horizontally and vertically inside of the bit boxes
-            g.DrawString(If(bits(i), "1", "0"), BitBoxFont, If(bits(i), TextbrushOn, TextbrushOff), rect.X + (BitBoxSize - g.MeasureString(If(bits(i), "1", "0"), BitBoxFont).Width) / 2, rect.Y + (BitBoxSize - g.MeasureString(If(bits(i), "1", "0"), BitBoxFont).Height) / 2)
+            g.DrawString(If(bits(i), "1", "0"),
+                         BitBoxFont,
+                         If(bits(i), TextbrushOn, TextbrushOff),
+                         rect.X + (BitBoxSize - g.MeasureString(If(bits(i), "1", "0"), BitBoxFont).Width) / 2,
+                         rect.Y + (BitBoxSize - g.MeasureString(If(bits(i), "1", "0"), BitBoxFont).Height) / 2)
 
             Dim placeValueBrush = Brushes.LightGray
 
             Dim placeValue = CStr(2 ^ (7 - i))
-            g.DrawString(placeValue, placeValueFont, placeValueBrush, rect.X + BitBoxSize \ 2, rect.Y - Me.ClientSize.Height \ 12, AlineCenter)
+
+            g.DrawString(placeValue,
+                         placeValueFont,
+                         placeValueBrush,
+                         rect.X + BitBoxSize \ 2,
+                         rect.Y - Me.ClientSize.Height \ 12,
+                         AlineCenter)
 
         Next
 
         ' Draw decimal value
         Dim binaryStr = String.Join("", bits.Select(Function(b) If(b, "1", "0")))
         Dim decimalVal = Convert.ToInt32(binaryStr, 2)
-        g.DrawString($"{decimalVal}", DecimalFont, Brushes.White, ClientSize.Width \ 2, StartY - Me.ClientSize.Height \ 3, AlineCenter)
+
+        g.DrawString($"{decimalVal}",
+                     DecimalFont,
+                     Brushes.White,
+                     ClientSize.Width \ 2,
+                     StartY - Me.ClientSize.Height \ 3,
+                     AlineCenter)
 
         ' Show the place values adding up to the decimal value.
         Dim activeValues = New List(Of Integer)
@@ -102,7 +123,12 @@ Public Class Form1
         If activeValues.Count > 1 Then
             Dim breakdown = String.Join(" + ", activeValues)
             Dim breakdownBrush = Brushes.DarkGray
-            g.DrawString($"{breakdown} = {decimalVal}", breakdownFont, breakdownBrush, ClientSize.Width \ 2, StartY + Me.ClientSize.Height \ 4, AlineCenter)
+
+            g.DrawString($"{breakdown} = {decimalVal}",
+                         breakdownFont, breakdownBrush,
+                         ClientSize.Width \ 2,
+                         StartY + Me.ClientSize.Height \ 4,
+                         AlineCenter)
         End If
 
     End Sub
@@ -164,7 +190,10 @@ Public Class Form1
         StartY = (Me.ClientSize.Height) \ 2 - (BitBoxSize \ 2)
 
         For i = 0 To 7
-            bitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing), StartY, BitBoxSize, BitBoxSize)
+            bitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing),
+                                        StartY,
+                                        BitBoxSize,
+                                        BitBoxSize)
         Next
 
         BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 11))
