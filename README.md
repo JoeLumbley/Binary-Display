@@ -2,8 +2,8 @@
 
 A playful, interactive educational tool for visualizing binary numbers and their decimal equivalents. Designed to help learners explore bitwise representation through intuitive graphics, affirming sound effects, and real-time feedback.
 
+<img width="1920" height="1080" alt="003" src="https://github.com/user-attachments/assets/23ac32f7-21b8-40a3-9be6-eaf5d428fb8e" />
 
-<img width="1920" height="1080" alt="001" src="https://github.com/user-attachments/assets/9c9e785f-e351-4a38-aee1-1fc0aa92524f" />
 
 ### ✨ Features
 
@@ -39,3 +39,4 @@ This app is ideal for:
 
 
 
+<img width="1920" height="1080" alt="002" src="https://github.com/user-attachments/assets/a979c2a7-d916-459f-8fa6-d36e0ffe7f89" />
