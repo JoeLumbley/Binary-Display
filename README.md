@@ -83,16 +83,8 @@ This app is ideal for:
 ---
 ### 🔢 Range of 8 Bits
 
-**With 8 bits, we can represent numbers from 0 to 255:**
+**With 8 bits, we can represent numbers from 0 to 255.**
 
-
-[ 8 Bits ]
-[ 0000 0000 ]
-[ 0 ]
-
-[ 8 Bits ]
-[ 1111 1111 ]
-[ 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255 ]
 
 
 ---
