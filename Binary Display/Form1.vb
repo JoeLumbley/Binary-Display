@@ -470,11 +470,36 @@ Public Structure AudioPlayer
 
     End Function
 
+    'Public Sub AddOverlapping(SoundName As String, FilePath As String)
+
+    '    For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H",
+    '                                  "I", "J", "K", "L", "M", "N", "O", "P",
+    '                                  "Q", "R", "S", "T", "U", "V", "W", "X"}
+
+    '        AddSound(SoundName & Suffix, FilePath)
+
+    '    Next
+
+    'End Sub
+    'Public Sub AddOverlapping(SoundName As String, FilePath As String)
+
+    '    For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H",
+    '                                  "I", "J", "K", "L", "M", "N", "O", "P",
+    '                                  "Q", "R", "S", "T", "U", "V", "W", "X",
+    '                                  "Y", "Z"}
+
+    '        AddSound(SoundName & Suffix, FilePath)
+
+    '    Next
+
+    'End Sub
+
     Public Sub AddOverlapping(SoundName As String, FilePath As String)
 
         For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H",
                                       "I", "J", "K", "L", "M", "N", "O", "P",
-                                      "Q", "R", "S", "T", "U", "V", "W", "X"}
+                                      "Q", "R", "S", "T", "U", "V", "W", "X",
+                                      "Y", "Z", "AA", "AB", "AC", "AD", "AE"}
 
             AddSound(SoundName & Suffix, FilePath)
 
@@ -482,11 +507,42 @@ Public Structure AudioPlayer
 
     End Sub
 
+
+    'Public Sub PlayOverlapping(SoundName As String)
+
+    '    For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H",
+    '                                  "I", "J", "K", "L", "M", "N", "O", "P",
+    '                                  "Q", "R", "S", "T", "U", "V", "W", "X"}
+
+    '        If Not IsPlaying(SoundName & Suffix) Then
+
+    '            PlaySound(SoundName & Suffix)
+
+    '            Exit Sub
+
+    '        End If
+
+    '    Next
+
+    'End Sub
+    'Public Sub PlayOverlapping(SoundName As String)
+    '    For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H",
+    '                                  "I", "J", "K", "L", "M", "N", "O", "P",
+    '                                  "Q", "R", "S", "T", "U", "V", "W", "X",
+    '                                  "Y", "Z"}
+    '        If Not IsPlaying(SoundName & Suffix) Then
+    '            PlaySound(SoundName & Suffix)
+    '            Exit Sub
+    '        End If
+    '    Next
+    'End Sub
+
     Public Sub PlayOverlapping(SoundName As String)
 
         For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H",
                                       "I", "J", "K", "L", "M", "N", "O", "P",
-                                      "Q", "R", "S", "T", "U", "V", "W", "X"}
+                                      "Q", "R", "S", "T", "U", "V", "W", "X",
+                                      "Y", "Z", "AA", "AB", "AC", "AD", "AE"}
 
             If Not IsPlaying(SoundName & Suffix) Then
 
@@ -500,17 +556,65 @@ Public Structure AudioPlayer
 
     End Sub
 
+
+    'For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H",
+    '                                  "I", "J", "K", "L", "M", "N", "O", "P",
+    '                                  "Q", "R", "S", "T", "U", "V", "W", "X",
+    '                                  "Y", "Z", "AA", "AB, "AC", "AD", "AE"}
+
+
+
+
+
+    'End Sub
+
+
+
+
+    '            For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H",
+    '                                  "I", "J", "K", "L", "M", "N", "O", "P",
+    '                                  "Q", "R", "S", "T", "U", "V", "W", "X",
+    '                                  "Y", "Z", "AA", "AB, "AC", "AD", "AE"}
+
+
+    '        If Not IsPlaying(SoundName & Suffix) Then
+    '            PlaySound(SoundName & Suffix)
+    '            Exit Sub
+    '        End If
+
+    '    Next
+
+    'End Sub
+
+
+
+
+
+
+    'Public Sub SetVolumeOverlapping(SoundName As String, Level As Integer)
+
+    '    For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H",
+    '                                  "I", "J", "K", "L", "M", "N", "O", "P",
+    '                                  "Q", "R", "S", "T", "U", "V", "W", "X"}
+
+    '        SetVolume(SoundName & Suffix, Level)
+
+    '    Next
+
+    'End Sub
     Public Sub SetVolumeOverlapping(SoundName As String, Level As Integer)
 
         For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H",
                                       "I", "J", "K", "L", "M", "N", "O", "P",
-                                      "Q", "R", "S", "T", "U", "V", "W", "X"}
+                                      "Q", "R", "S", "T", "U", "V", "W", "X",
+                                      "Y", "Z", "AA", "AB", "AC", "AD", "AE"}
 
             SetVolume(SoundName & Suffix, Level)
 
         Next
 
     End Sub
+
 
     Private Function SendMciCommand(command As String, hwndCallback As IntPtr) As Boolean
 
