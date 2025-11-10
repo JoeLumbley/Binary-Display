@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
@@ -8,20 +7,179 @@ Public Class Form1
 
     Private Player As AudioPlayer
 
-    Private bits(7) As Boolean
-    Private bitRects(7) As Rectangle
+    Private Bits(7) As Boolean
+    Private BitRects(7) As Rectangle
     Private BitBoxSize As Integer = 200
     Private BitSpacing As Integer = 10
     Private StartX As Integer = 200
     Private StartY As Integer = 200
 
-    Dim BitBoxFont As New Font("Consolas", 128)
-    Dim placeValueFont = New Font("Consolas", 55)
-    Dim breakdownFont = New Font("Consolas", 55)
-    Dim DecimalFont = New Font("Consolas", 72)
+    Private BitBoxFont As New Font("Consolas", 128)
+    Private PlaceValueFont = New Font("Consolas", 55)
+    Private BreakdownFont = New Font("Consolas", 55)
+    Private DecimalFont = New Font("Consolas", 72)
+
+    Private Graph As Graphics
+
+    Private BrushOn = Brushes.Lime
+    Private BrushOff = Brushes.DarkGray
+
+    Private TextbrushOn = Brushes.Black
+    Private TextbrushOff = Brushes.Gray
+    Private AlineCenter As New StringFormat With {
+            .Alignment = StringAlignment.Center
+           }
+
+    Private PlaceValueBrush = Brushes.LightGray
+
+    Private BinaryStr As String
+    Private DecimalVal As Integer
+
+    Private ActiveValues As New List(Of Integer)
+
+    Private BreakdownBrush = Brushes.DarkGray
+    Private DecimalBrush = Brushes.White
+
+    Private PlaceValue As String
+
+    Private Rect As Rectangle
+
+    Private Breakdown As String
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        InitializeApp()
+
+    End Sub
+
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
+        MyBase.OnPaint(e)
+
+        Graph = e.Graphics
+
+        Graph.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+
+        DrawBitBoxes()
+
+        DrawDecimalValue()
+
+        DrawActiveValuesBreakdown()
+
+    End Sub
+
+    Protected Overrides Sub OnMouseClick(e As MouseEventArgs)
+        MyBase.OnMouseClick(e)
+
+        For i = 0 To 7
+
+            If BitRects(i).Contains(e.Location) Then
+
+                Player.PlayOverlapping("CashCollected")
+
+                Bits(i) = Not Bits(i)
+
+                Me.Invalidate()
+
+                Exit For
+
+            End If
+
+        Next
+
+    End Sub
+
+    Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
+        MyBase.OnKeyDown(e)
+
+        Dim currentValue = Convert.ToInt32(String.Join("", Bits.Select(Function(b) If(b, "1", "0"))), 2)
+
+        If e.KeyCode = Keys.Up Then
+
+            If currentValue < 255 Then
+
+                currentValue += 1
+
+                Player.PlayOverlapping("CashCollected")
+
+            End If
+
+        ElseIf e.KeyCode = Keys.Down Then
+
+            If currentValue > 0 Then
+
+                currentValue -= 1
+
+                Player.PlayOverlapping("CashCollected")
+
+            End If
+
+        Else
+
+            Return
+
+        End If
+
+        ' Update bits array
+        Dim binaryStr = Convert.ToString(currentValue, 2).PadLeft(8, "0"c)
+
+        For i = 0 To 7
+
+            Bits(i) = binaryStr(i) = "1"
+
+        Next
+
+        Me.Invalidate()
+
+    End Sub
+
+    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+
+        'BitBoxSize = Math.Max(32, Me.ClientSize.Height \ 6)
+
+        'BitSpacing = Math.Max(5, Me.ClientSize.Height \ 42)
+        UpdateSizes()
+
+        'StartX = (Me.ClientSize.Width - (8 * (BitBoxSize + BitSpacing) - BitSpacing)) \ 2
+        'StartY = (Me.ClientSize.Height) \ 2 - (BitBoxSize \ 2)
+        UpdateStartPositions()
+
+        'For i = 0 To 7
+        '    BitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing),
+        '                                StartY,
+        '                                BitBoxSize,
+        '                                BitBoxSize)
+        'Next
+        UpdateBitRects()
+
+
+        'BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 11))
+        'PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
+        'BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
+        'DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 8))
+        UpdateFonts()
+
+        Me.Invalidate()
+
+    End Sub
+
+    Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+
+        Player.CloseSounds()
+
+    End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+    Private Sub InitializeApp()
         Player = New AudioPlayer
 
         CreateSoundFiles()
@@ -48,168 +206,132 @@ Public Class Form1
         Text = "8-Bit Binary Display - Code with Joe"
 
         For i = 0 To 7
-            bitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing),
+            BitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing),
                                         StartY,
                                         BitBoxSize,
                                         BitBoxSize)
         Next
 
         Player.LoopSound("ComputerPulsation")
-
     End Sub
 
-    Protected Overrides Sub OnPaint(e As PaintEventArgs)
-        MyBase.OnPaint(e)
 
-        Dim g = e.Graphics
+    Private Sub DrawActiveValuesBreakdown()
+        ' Draw a breakdown showing the active place values adding up to the decimal value.
+        ActiveValues = New List(Of Integer)
 
-        Dim brushOn = Brushes.Lime
-        Dim brushOff = Brushes.DarkGray
+        For i = 0 To 7
 
-        Dim TextbrushOn = Brushes.Black
-        Dim TextbrushOff = Brushes.Gray
-        Dim AlineCenter As New StringFormat With {
-            .Alignment = StringAlignment.Center
-        }
+            If Bits(i) Then ActiveValues.Add(2 ^ (7 - i))
 
-        Dim pen = Pens.Black
+        Next
 
-        g.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+        If ActiveValues.Count > 1 Then
+
+            Breakdown = String.Join(" + ", ActiveValues)
+
+            Graph.DrawString($"{Breakdown} = {DecimalVal}",
+                             BreakdownFont, BreakdownBrush,
+                             ClientSize.Width \ 2,
+                             StartY + Me.ClientSize.Height \ 4,
+                             AlineCenter)
+
+        End If
+    End Sub
+
+    Private Sub DrawDecimalValue()
+        ' Draw decimal value.
+        BinaryStr = String.Join("", Bits.Select(Function(b) If(b, "1", "0")))
+        DecimalVal = Convert.ToInt32(BinaryStr, 2)
+
+        Graph.DrawString($"{DecimalVal}",
+                         DecimalFont,
+                         DecimalBrush,
+                         ClientSize.Width \ 2,
+                         StartY - Me.ClientSize.Height \ 3,
+                         AlineCenter)
+    End Sub
+
+    Private Sub DrawBitBoxes()
 
         ' Draw bit boxes
         For i = 0 To 7
-            Dim rect = bitRects(i)
 
-            g.FillRectangle(If(bits(i), brushOn, brushOff), rect)
-            g.DrawRectangle(pen, rect)
+            Rect = BitRects(i)
 
-            'Centered horizontally and vertically inside of the bit boxes
-            g.DrawString(If(bits(i), "1", "0"),
-                         BitBoxFont,
-                         If(bits(i), TextbrushOn, TextbrushOff),
-                         rect.X + (BitBoxSize - g.MeasureString(If(bits(i), "1", "0"), BitBoxFont).Width) / 2,
-                         rect.Y + (BitBoxSize - g.MeasureString(If(bits(i), "1", "0"), BitBoxFont).Height) / 2)
+            Graph.FillRectangle(If(Bits(i), BrushOn, BrushOff),
+                                Rect)
 
-            Dim placeValueBrush = Brushes.LightGray
+            'Draw the binary digit centered horizontally and vertically inside of the bit boxes
+            Graph.DrawString(If(Bits(i), "1", "0"),
+                             BitBoxFont,
+                             If(Bits(i), TextbrushOn, TextbrushOff),
+                             Rect.X + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Width) / 2,
+                             Rect.Y + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Height) / 2)
 
-            Dim placeValue = CStr(2 ^ (7 - i))
+            PlaceValue = CStr(2 ^ (7 - i))
 
-            g.DrawString(placeValue,
-                         placeValueFont,
-                         placeValueBrush,
-                         rect.X + BitBoxSize \ 2,
-                         rect.Y - Me.ClientSize.Height \ 12,
-                         AlineCenter)
+            Graph.DrawString(PlaceValue,
+                             PlaceValueFont,
+                             PlaceValueBrush,
+                             Rect.X + BitBoxSize \ 2,
+                             Rect.Y - Me.ClientSize.Height \ 12,
+                             AlineCenter)
 
         Next
-
-        ' Draw decimal value
-        Dim binaryStr = String.Join("", bits.Select(Function(b) If(b, "1", "0")))
-        Dim decimalVal = Convert.ToInt32(binaryStr, 2)
-
-        g.DrawString($"{decimalVal}",
-                     DecimalFont,
-                     Brushes.White,
-                     ClientSize.Width \ 2,
-                     StartY - Me.ClientSize.Height \ 3,
-                     AlineCenter)
-
-        ' Show the place values adding up to the decimal value.
-        Dim activeValues = New List(Of Integer)
-        For i = 0 To 7
-            If bits(i) Then activeValues.Add(2 ^ (7 - i))
-        Next
-
-        If activeValues.Count > 1 Then
-            Dim breakdown = String.Join(" + ", activeValues)
-            Dim breakdownBrush = Brushes.DarkGray
-
-            g.DrawString($"{breakdown} = {decimalVal}",
-                         breakdownFont, breakdownBrush,
-                         ClientSize.Width \ 2,
-                         StartY + Me.ClientSize.Height \ 4,
-                         AlineCenter)
-        End If
 
     End Sub
 
-    Protected Overrides Sub OnMouseClick(e As MouseEventArgs)
-        MyBase.OnMouseClick(e)
-        For i = 0 To 7
-            If bitRects(i).Contains(e.Location) Then
-
-                Player.PlayOverlapping("CashCollected")
-
-                bits(i) = Not bits(i)
-
-                Me.Invalidate()
-
-                Exit For
-            End If
-        Next
-    End Sub
-
-    Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
-        MyBase.OnKeyDown(e)
-
-        Dim currentValue = Convert.ToInt32(String.Join("", bits.Select(Function(b) If(b, "1", "0"))), 2)
-
-        If e.KeyCode = Keys.Up Then
-            If currentValue < 255 Then
-                currentValue += 1
-                Player.PlayOverlapping("CashCollected")
-            End If
-
-        ElseIf e.KeyCode = Keys.Down Then
-            If currentValue > 0 Then
-                currentValue -= 1
-                Player.PlayOverlapping("CashCollected")
-            End If
-
-        Else
-            Return
-        End If
-
-        ' Update bits array
-        Dim binaryStr = Convert.ToString(currentValue, 2).PadLeft(8, "0"c)
-        For i = 0 To 7
-            bits(i) = binaryStr(i) = "1"
-        Next
-
-        Me.Invalidate()
-
-    End Sub
-
-    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-
-        BitBoxSize = Math.Max(32, Me.ClientSize.Height \ 6)
-
-        BitSpacing = Math.Max(5, Me.ClientSize.Height \ 42)
-
-        StartX = (Me.ClientSize.Width - (8 * (BitBoxSize + BitSpacing) - BitSpacing)) \ 2
-        StartY = (Me.ClientSize.Height) \ 2 - (BitBoxSize \ 2)
+    Private Sub UpdateBitRects()
 
         For i = 0 To 7
+
             bitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing),
                                         StartY,
                                         BitBoxSize,
                                         BitBoxSize)
+
         Next
 
+    End Sub
+
+    Private Sub UpdateFonts()
         BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 11))
         placeValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
         breakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
         DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 8))
+    End Sub
 
-        Me.Invalidate()
+    Private Sub UpdateStartPositions()
+        StartX = (Me.ClientSize.Width - (8 * (BitBoxSize + BitSpacing) - BitSpacing)) \ 2
+        StartY = (Me.ClientSize.Height) \ 2 - (BitBoxSize \ 2)
+    End Sub
+
+    Private Sub UpdateSizes()
+        BitBoxSize = Math.Max(32, Me.ClientSize.Height \ 6)
+        BitSpacing = Math.Max(5, Me.ClientSize.Height \ 42)
+    End Sub
+
+
+
+    Private Sub UpdateAllLayout()
+        UpdateSizes()
+        UpdateStartPositions()
+        UpdateBitRects()
+        UpdateFonts()
+    End Sub
+
+    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+
+        UpdateAllLayout()
 
     End Sub
 
-    Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
 
-        Player.CloseSounds()
 
-    End Sub
+
+
+
 
     Private Sub CreateSoundFiles()
 
