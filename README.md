@@ -3,6 +3,8 @@
 A interactive tool for visualizing binary numbers and their decimal equivalents. Designed to help you explore bitwise representation through intuitive graphics, affirming sound effects, and real-time feedback.
 
 [Code Walkthrough](#code-walkthrough)
+
+
 ---
 
 ### Binary Basics
