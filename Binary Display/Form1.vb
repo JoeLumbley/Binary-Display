@@ -134,28 +134,12 @@ Public Class Form1
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
 
-        'BitBoxSize = Math.Max(32, Me.ClientSize.Height \ 6)
-
-        'BitSpacing = Math.Max(5, Me.ClientSize.Height \ 42)
         UpdateSizes()
 
-        'StartX = (Me.ClientSize.Width - (8 * (BitBoxSize + BitSpacing) - BitSpacing)) \ 2
-        'StartY = (Me.ClientSize.Height) \ 2 - (BitBoxSize \ 2)
         UpdateStartPositions()
 
-        'For i = 0 To 7
-        '    BitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing),
-        '                                StartY,
-        '                                BitBoxSize,
-        '                                BitBoxSize)
-        'Next
         UpdateBitRects()
 
-
-        'BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 11))
-        'PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
-        'BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
-        'DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 8))
         UpdateFonts()
 
         Me.Invalidate()
@@ -168,18 +152,8 @@ Public Class Form1
 
     End Sub
 
-
-
-
-
-
-
-
-
-
-
-
     Private Sub InitializeApp()
+
         Player = New AudioPlayer
 
         CreateSoundFiles()
@@ -213,6 +187,7 @@ Public Class Form1
         Next
 
         Player.LoopSound("ComputerPulsation")
+
     End Sub
 
 
