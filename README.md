@@ -95,6 +95,7 @@ This app is ideal for:
 
 # Code Walkthrough
 
+---
 
 ## 📦 Imports
 
