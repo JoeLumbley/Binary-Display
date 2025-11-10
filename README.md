@@ -2,6 +2,7 @@
 
 A interactive tool for visualizing binary numbers and their decimal equivalents. Designed to help you explore bitwise representation through intuitive graphics, affirming sound effects, and real-time feedback.
 
+[Code Walkthrough](#code-walkthrough)
 ---
 
 ### Binary Basics
@@ -405,4 +406,26 @@ Private Sub CreateFileFromResource(filepath As String, resource As Byte())
 
 
 
+
+
+
+
 <img width="1920" height="1080" alt="002" src="https://github.com/user-attachments/assets/a979c2a7-d916-459f-8fa6-d36e0ffe7f89" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
