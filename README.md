@@ -4,9 +4,9 @@ A interactive tool for visualizing binary numbers and their decimal equivalents.
 
 ---
 
-### 🧠 Binary Basics
+### Binary Basics
 
-**Binary is a numbering system using only two digits 0 and 1**
+**Binary is a numbering system using only two digits 0 and 1.**
 
 ---
 
