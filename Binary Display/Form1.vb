@@ -190,73 +190,6 @@ Public Class Form1
 
     End Sub
 
-
-    Private Sub DrawActiveValuesBreakdown()
-        ' Draw a breakdown showing the active place values adding up to the decimal value.
-        ActiveValues = New List(Of Integer)
-
-        For i = 0 To 7
-
-            If Bits(i) Then ActiveValues.Add(2 ^ (7 - i))
-
-        Next
-
-        If ActiveValues.Count > 1 Then
-
-            Breakdown = String.Join(" + ", ActiveValues)
-
-            Graph.DrawString($"{Breakdown} = {DecimalVal}",
-                             BreakdownFont, BreakdownBrush,
-                             ClientSize.Width \ 2,
-                             StartY + Me.ClientSize.Height \ 4,
-                             AlineCenter)
-
-        End If
-    End Sub
-
-    Private Sub DrawDecimalValue()
-        ' Draw decimal value.
-        BinaryStr = String.Join("", Bits.Select(Function(b) If(b, "1", "0")))
-        DecimalVal = Convert.ToInt32(BinaryStr, 2)
-
-        Graph.DrawString($"{DecimalVal}",
-                         DecimalFont,
-                         DecimalBrush,
-                         ClientSize.Width \ 2,
-                         StartY - Me.ClientSize.Height \ 3,
-                         AlineCenter)
-    End Sub
-
-    Private Sub DrawBitBoxes()
-
-        ' Draw bit boxes
-        For i = 0 To 7
-
-            Rect = BitRects(i)
-
-            Graph.FillRectangle(If(Bits(i), BrushOn, BrushOff),
-                                Rect)
-
-            'Draw the binary digit centered horizontally and vertically inside of the bit boxes
-            Graph.DrawString(If(Bits(i), "1", "0"),
-                             BitBoxFont,
-                             If(Bits(i), TextbrushOn, TextbrushOff),
-                             Rect.X + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Width) / 2,
-                             Rect.Y + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Height) / 2)
-
-            PlaceValue = CStr(2 ^ (7 - i))
-
-            Graph.DrawString(PlaceValue,
-                             PlaceValueFont,
-                             PlaceValueBrush,
-                             Rect.X + BitBoxSize \ 2,
-                             Rect.Y - Me.ClientSize.Height \ 12,
-                             AlineCenter)
-
-        Next
-
-    End Sub
-
     Private Sub UpdateBitRects()
 
         For i = 0 To 7
@@ -287,26 +220,77 @@ Public Class Form1
         BitSpacing = Math.Max(5, Me.ClientSize.Height \ 42)
     End Sub
 
+    Private Sub DrawDecimalValue()
+        ' Draw decimal value.
 
+        BinaryStr = String.Join("", Bits.Select(Function(b) If(b, "1", "0")))
 
-    Private Sub UpdateAllLayout()
-        UpdateSizes()
-        UpdateStartPositions()
-        UpdateBitRects()
-        UpdateFonts()
+        DecimalVal = Convert.ToInt32(BinaryStr, 2)
+
+        Graph.DrawString($"{DecimalVal}",
+                         DecimalFont,
+                         DecimalBrush,
+                         ClientSize.Width \ 2,
+                         StartY - Me.ClientSize.Height \ 3,
+                         AlineCenter)
+
     End Sub
 
-    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+    Private Sub DrawBitBoxes()
 
-        UpdateAllLayout()
+        ' Draw bit boxes
+        For i = 0 To 7
+
+            Rect = BitRects(i)
+
+            Graph.FillRectangle(If(Bits(i), BrushOn, BrushOff),
+                                Rect)
+
+            'Draw the binary digit centered horizontally and vertically inside of the bit boxes
+            Graph.DrawString(If(Bits(i), "1", "0"),
+                             BitBoxFont,
+                             If(Bits(i), TextbrushOn, TextbrushOff),
+                             Rect.X + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Width) / 2,
+                             Rect.Y + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Height) / 2)
+
+            ' Draw place value above each bit box
+            PlaceValue = CStr(2 ^ (7 - i))
+
+            Graph.DrawString(PlaceValue,
+                             PlaceValueFont,
+                             PlaceValueBrush,
+                             Rect.X + BitBoxSize \ 2,
+                             Rect.Y - Me.ClientSize.Height \ 12,
+                             AlineCenter)
+
+        Next
 
     End Sub
 
+    Private Sub DrawActiveValuesBreakdown()
+        ' Draw a breakdown showing the active place values adding up to the decimal value.
 
+        ActiveValues = New List(Of Integer)
 
+        For i = 0 To 7
 
+            If Bits(i) Then ActiveValues.Add(2 ^ (7 - i))
 
+        Next
 
+        If ActiveValues.Count > 1 Then
+
+            Breakdown = String.Join(" + ", ActiveValues)
+
+            Graph.DrawString($"{Breakdown} = {DecimalVal}",
+                             BreakdownFont, BreakdownBrush,
+                             ClientSize.Width \ 2,
+                             StartY + Me.ClientSize.Height \ 4,
+                             AlineCenter)
+
+        End If
+
+    End Sub
 
     Private Sub CreateSoundFiles()
 
