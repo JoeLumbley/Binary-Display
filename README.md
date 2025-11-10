@@ -87,16 +87,14 @@ This app is ideal for:
 
 
 
----
 
 
-Absolutely, Joseph! Here's a beginner-friendly, line-by-line walkthrough formatted for a GitHub README that explains your VB.NET binary visualizer project. It’s designed to be clear, engaging, and educational for learners exploring graphics, input handling, and binary concepts.
+
 
 ---
 
 # Code Walkthrough
 
----
 
 ## 📦 Imports
 
