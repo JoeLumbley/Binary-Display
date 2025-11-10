@@ -1,6 +1,6 @@
 # Binary Display
 
-A interactive tool for visualizing binary numbers and their decimal equivalents. Designed to help you explore bitwise representation through intuitive graphics, affirming sound effects, and real-time feedback.
+A interactive tool for learning binary numbers through visual feedback and sound.
 
 [Code Walkthrough](#code-walkthrough)
 
