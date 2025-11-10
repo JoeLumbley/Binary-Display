@@ -5,46 +5,40 @@ Imports System.Text
 
 Public Class Form1
 
-    Private Player As AudioPlayer
-
+    Private BinaryStr As String
     Private Bits(7) As Boolean
     Private BitRects(7) As Rectangle
-    Private BitBoxSize As Integer = 200
-    Private BitSpacing As Integer = 10
-    Private StartX As Integer = 200
-    Private StartY As Integer = 200
+    Private BitBoxSize As Integer = 0
+    Private BitSpacing As Integer = 0
+    Private BitBoxesLeft As Integer = 0
+    Private BitBoxesTop As Integer = 0
 
-    Private BitBoxFont As New Font("Consolas", 128)
-    Private PlaceValueFont = New Font("Consolas", 55)
-    Private BreakdownFont = New Font("Consolas", 55)
-    Private DecimalFont = New Font("Consolas", 72)
+    Private BitOnBrush = Brushes.Lime
+    Private BitOffBrush = Brushes.DarkGray
+    Private TextOnBrush = Brushes.Black
+    Private TextOffBrush = Brushes.Gray
+    Private BitBoxFont As New Font("Consolas", 12)
 
-    Private Graph As Graphics
-
-    Private BrushOn = Brushes.Lime
-    Private BrushOff = Brushes.DarkGray
-
-    Private TextbrushOn = Brushes.Black
-    Private TextbrushOff = Brushes.Gray
-    Private AlineCenter As New StringFormat With {
-            .Alignment = StringAlignment.Center
-           }
-
-    Private PlaceValueBrush = Brushes.LightGray
-
-    Private BinaryStr As String
     Private DecimalVal As Integer
-
-    Private ActiveValues As New List(Of Integer)
-
-    Private BreakdownBrush = Brushes.DarkGray
     Private DecimalBrush = Brushes.White
+    Private DecimalFont = New Font("Consolas", 12)
 
     Private PlaceValue As String
+    Private PlaceValueBrush = Brushes.LightGray
+    Private PlaceValueFont = New Font("Consolas", 12)
+
+    Private ActiveValues As New List(Of Integer)
+    Private Breakdown As String
+    Private BreakdownBrush = Brushes.DarkGray
+    Private BreakdownFont = New Font("Consolas", 12)
 
     Private Rect As Rectangle
 
-    Private Breakdown As String
+    Private Player As AudioPlayer
+
+    Private AlineCenter As New StringFormat With {.Alignment = StringAlignment.Center}
+
+    Private Graph As Graphics
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -180,8 +174,8 @@ Public Class Form1
         Text = "8-Bit Binary Display - Code with Joe"
 
         For i = 0 To 7
-            BitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing),
-                                        StartY,
+            BitRects(i) = New Rectangle(BitBoxesLeft + i * (BitBoxSize + BitSpacing),
+                                        BitBoxesTop,
                                         BitBoxSize,
                                         BitBoxSize)
         Next
@@ -194,8 +188,8 @@ Public Class Form1
 
         For i = 0 To 7
 
-            bitRects(i) = New Rectangle(StartX + i * (BitBoxSize + BitSpacing),
-                                        StartY,
+            BitRects(i) = New Rectangle(BitBoxesLeft + i * (BitBoxSize + BitSpacing),
+                                        BitBoxesTop,
                                         BitBoxSize,
                                         BitBoxSize)
 
@@ -205,14 +199,14 @@ Public Class Form1
 
     Private Sub UpdateFonts()
         BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 11))
-        placeValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
-        breakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
+        PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
+        BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 21))
         DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 8))
     End Sub
 
     Private Sub UpdateStartPositions()
-        StartX = (Me.ClientSize.Width - (8 * (BitBoxSize + BitSpacing) - BitSpacing)) \ 2
-        StartY = (Me.ClientSize.Height) \ 2 - (BitBoxSize \ 2)
+        BitBoxesLeft = (Me.ClientSize.Width - (8 * (BitBoxSize + BitSpacing) - BitSpacing)) \ 2
+        BitBoxesTop = (Me.ClientSize.Height) \ 2 - (BitBoxSize \ 2)
     End Sub
 
     Private Sub UpdateSizes()
@@ -231,7 +225,7 @@ Public Class Form1
                          DecimalFont,
                          DecimalBrush,
                          ClientSize.Width \ 2,
-                         StartY - Me.ClientSize.Height \ 3,
+                         BitBoxesTop - Me.ClientSize.Height \ 3,
                          AlineCenter)
 
     End Sub
@@ -243,13 +237,13 @@ Public Class Form1
 
             Rect = BitRects(i)
 
-            Graph.FillRectangle(If(Bits(i), BrushOn, BrushOff),
+            Graph.FillRectangle(If(Bits(i), BitOnBrush, BitOffBrush),
                                 Rect)
 
             'Draw the binary digit centered horizontally and vertically inside of the bit boxes
             Graph.DrawString(If(Bits(i), "1", "0"),
                              BitBoxFont,
-                             If(Bits(i), TextbrushOn, TextbrushOff),
+                             If(Bits(i), TextOnBrush, TextOffBrush),
                              Rect.X + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Width) / 2,
                              Rect.Y + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Height) / 2)
 
@@ -285,7 +279,7 @@ Public Class Form1
             Graph.DrawString($"{Breakdown} = {DecimalVal}",
                              BreakdownFont, BreakdownBrush,
                              ClientSize.Width \ 2,
-                             StartY + Me.ClientSize.Height \ 4,
+                             BitBoxesTop + Me.ClientSize.Height \ 4,
                              AlineCenter)
 
         End If
