@@ -5,9 +5,9 @@ Imports System.Text
 
 Public Class Form1
 
-    Private BinaryStr As String
-    Private Bits(7) As Boolean
-    Private BitRects(7) As Rectangle
+    Private BinaryStr As String = ""
+    Private Bits(7) As Boolean ' 8 bits for an 8-bit binary number.
+    Private BitRects(7) As Rectangle ' Rectangles for each bit box.
     Private BitBoxSize As Integer = 0
     Private BitSpacing As Integer = 0
     Private BitBoxesLeft As Integer = 0
@@ -19,16 +19,16 @@ Public Class Form1
     Private TextOffBrush = Brushes.Gray
     Private BitBoxFont As New Font("Consolas", 12)
 
-    Private DecimalVal As Integer
+    Private DecimalVal As Integer = 0
     Private DecimalBrush = Brushes.White
     Private DecimalFont = New Font("Consolas", 12)
 
-    Private PlaceValue As String
+    Private PlaceValue As String = ""
     Private PlaceValueBrush = Brushes.LightGray
     Private PlaceValueFont = New Font("Consolas", 12)
 
     Private ActiveValues As New List(Of Integer)
-    Private Breakdown As String
+    Private Breakdown As String = ""
     Private BreakdownBrush = Brushes.DarkGray
     Private BreakdownFont = New Font("Consolas", 12)
 
@@ -88,6 +88,27 @@ Public Class Form1
 
     End Sub
 
+    Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
+        MyBase.OnMouseMove(e)
+
+        Dim newHoverIndex As Integer = -1
+
+        For i = 0 To 7
+            If BitRects(i).Contains(e.Location) Then
+                newHoverIndex = i
+                Exit For
+            End If
+        Next
+
+        If newHoverIndex <> HoveredBitIndex Then
+            HoveredBitIndex = newHoverIndex
+            Me.Invalidate()
+        End If
+
+        Cursor = If(HoveredBitIndex <> -1, Cursors.Hand, Cursors.Default)
+
+    End Sub
+
     Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
         MyBase.OnKeyDown(e)
 
@@ -129,27 +150,6 @@ Public Class Form1
         Next
 
         Me.Invalidate()
-
-    End Sub
-
-    Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
-        MyBase.OnMouseMove(e)
-
-        Dim newHoverIndex As Integer = -1
-
-        For i = 0 To 7
-            If BitRects(i).Contains(e.Location) Then
-                newHoverIndex = i
-                Exit For
-            End If
-        Next
-
-        If newHoverIndex <> HoveredBitIndex Then
-            HoveredBitIndex = newHoverIndex
-            Me.Invalidate()
-        End If
-
-        Cursor = If(HoveredBitIndex <> -1, Cursors.Hand, Cursors.Default)
 
     End Sub
 
