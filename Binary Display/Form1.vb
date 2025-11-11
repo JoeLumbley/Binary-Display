@@ -132,10 +132,6 @@ Public Class Form1
 
     End Sub
 
-
-
-
-
     Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
         MyBase.OnMouseMove(e)
 
@@ -154,8 +150,8 @@ Public Class Form1
         End If
 
         Cursor = If(HoveredBitIndex <> -1, Cursors.Hand, Cursors.Default)
-    End Sub
 
+    End Sub
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
 
