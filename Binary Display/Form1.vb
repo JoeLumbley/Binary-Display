@@ -287,10 +287,12 @@ Public Class Form1
 
             ' Draw glow border if hovered
             If i = HoveredBitIndex Then
+
                 Using glowPen As New Pen(If(Bits(i), Color.White, Color.Chartreuse), BitSpacing / 3)
                     glowPen.Alignment = Drawing2D.PenAlignment.Outset
                     Graph.DrawRectangle(glowPen, Rect)
                 End Using
+
             End If
 
         Next
