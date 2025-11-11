@@ -13,7 +13,7 @@ Public Class Form1
     Private BitBoxesLeft As Integer = 0
     Private BitBoxesTop As Integer = 0
 
-    Private BitOnBrush = Brushes.Lime
+    Private BitOnBrush = Brushes.Chartreuse
     Private BitOffBrush = Brushes.DarkGray
     Private TextOnBrush = Brushes.Black
     Private TextOffBrush = Brushes.Gray
@@ -287,7 +287,7 @@ Public Class Form1
 
             ' Draw glow border if hovered
             If i = HoveredBitIndex Then
-                Using glowPen As New Pen(Color.White, 5)
+                Using glowPen As New Pen(If(Bits(i), Color.White, Color.Chartreuse), BitSpacing / 3)
                     glowPen.Alignment = Drawing2D.PenAlignment.Outset
                     Graph.DrawRectangle(glowPen, Rect)
                 End Using
