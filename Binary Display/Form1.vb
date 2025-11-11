@@ -40,6 +40,8 @@ Public Class Form1
 
     Private Graph As Graphics
 
+    Private HoveredBitIndex As Integer = -1
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         InitializeApp()
@@ -50,6 +52,10 @@ Public Class Form1
         MyBase.OnPaint(e)
 
         Graph = e.Graphics
+
+        Graph.CompositingMode = Drawing2D.CompositingMode.SourceOver
+
+        Graph.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
 
         Graph.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
 
@@ -125,6 +131,31 @@ Public Class Form1
         Me.Invalidate()
 
     End Sub
+
+
+
+
+
+    Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
+        MyBase.OnMouseMove(e)
+
+        Dim newHoverIndex As Integer = -1
+
+        For i = 0 To 7
+            If BitRects(i).Contains(e.Location) Then
+                newHoverIndex = i
+                Exit For
+            End If
+        Next
+
+        If newHoverIndex <> HoveredBitIndex Then
+            HoveredBitIndex = newHoverIndex
+            Me.Invalidate()
+        End If
+
+        Cursor = If(HoveredBitIndex <> -1, Cursors.Hand, Cursors.Default)
+    End Sub
+
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
 
@@ -256,6 +287,15 @@ Public Class Form1
                              Rect.X + BitBoxSize \ 2,
                              Rect.Y - Me.ClientSize.Height \ 12,
                              AlineCenter)
+
+
+            ' Draw glow border if hovered
+            If i = HoveredBitIndex Then
+                Using glowPen As New Pen(Color.White, 5)
+                    glowPen.Alignment = Drawing2D.PenAlignment.Outset
+                    Graph.DrawRectangle(glowPen, Rect)
+                End Using
+            End If
 
         Next
 
