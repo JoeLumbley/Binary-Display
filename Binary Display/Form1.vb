@@ -263,7 +263,7 @@ Public Class Form1
 
     Private Sub DrawBitBoxes()
 
-        ' Draw bit boxes
+        ' Draw bit boxes.
         For i = 0 To 7
 
             Rect = BitRects(i)
@@ -271,14 +271,14 @@ Public Class Form1
             Graph.FillRectangle(If(Bits(i), BitOnBrush, BitOffBrush),
                                 Rect)
 
-            'Draw the binary digit centered horizontally and vertically inside of the bit boxes
+            ' Draw the binary digit centered horizontally and vertically inside of the bit boxes.
             Graph.DrawString(If(Bits(i), "1", "0"),
                              BitBoxFont,
                              If(Bits(i), TextOnBrush, TextOffBrush),
                              Rect.X + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Width) / 2,
                              Rect.Y + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Height) / 2)
 
-            ' Draw place value above each bit box
+            ' Draw place value above each bit box.
             PlaceValue = CStr(2 ^ (7 - i))
 
             Graph.DrawString(PlaceValue,
@@ -289,7 +289,7 @@ Public Class Form1
                              AlineCenter)
 
 
-            ' Draw border if hovered
+            ' Draw border if hovered.
             If i = HoveredBitIndex Then
 
                 Using borderPen As New Pen(If(Bits(i), Color.DeepPink, Color.OrangeRed), BitSpacing / 3)
