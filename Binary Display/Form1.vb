@@ -288,7 +288,6 @@ Public Class Form1
                              Rect.Y - Me.ClientSize.Height \ 12,
                              AlineCenter)
 
-
             ' Draw border if hovered.
             If i = HoveredBitIndex Then
 
