@@ -14,9 +14,13 @@ Public Class Form1
     Private BitBoxesTop As Integer = 0
 
     Private BitOnBrush = Brushes.Chartreuse
-    Private BitOffBrush = Brushes.DarkGray
+    'Private BitOffBrush = Brushes.DarkGray
+    Private BitOffBrush = New SolidBrush(Color.FromArgb(255, 195, 195, 195))
+
     Private TextOnBrush = Brushes.Black
-    Private TextOffBrush = Brushes.Gray
+    'Private TextOffBrush = Brushes.Gray
+    Private TextOffBrush = New SolidBrush(Color.FromArgb(255, 75, 75, 75))
+
     Private BitBoxFont As New Font("Consolas", 12)
 
     Private DecimalVal As Integer = 0
@@ -24,7 +28,7 @@ Public Class Form1
     Private DecimalFont = New Font("Consolas", 12)
 
     Private PlaceValue As String = ""
-    Private PlaceValueBrush = Brushes.LightGray
+    Private PlaceValueBrush = Brushes.DarkGray
     Private PlaceValueFont = New Font("Consolas", 12)
 
     Private ActiveValues As New List(Of Integer)
@@ -189,7 +193,7 @@ Public Class Form1
 
         Player.AddSound("ComputerPulsation", FilePath)
 
-        Player.SetVolume("ComputerPulsation", 25)
+        Player.SetVolume("ComputerPulsation", 40)
 
         MinimumSize = New Size(720, 480)
 
@@ -285,12 +289,12 @@ Public Class Form1
                              AlineCenter)
 
 
-            ' Draw glow border if hovered
+            ' Draw border if hovered
             If i = HoveredBitIndex Then
 
-                Using glowPen As New Pen(If(Bits(i), Color.White, Color.Chartreuse), BitSpacing / 3)
-                    glowPen.Alignment = Drawing2D.PenAlignment.Outset
-                    Graph.DrawRectangle(glowPen, Rect)
+                Using borderPen As New Pen(If(Bits(i), Color.DeepPink, Color.OrangeRed), BitSpacing / 3)
+                    borderPen.Alignment = Drawing2D.PenAlignment.Outset
+                    Graph.DrawRectangle(borderPen, Rect)
                 End Using
 
             End If
