@@ -1,6 +1,6 @@
 # Binary Display
 
-A interactive tool for learning binary numbers through visual feedback and sound.
+A interactive app for learning binary numbers through visual feedback and sound.
 
 [Code Walkthrough](#code-walkthrough)
 
