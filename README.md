@@ -286,6 +286,85 @@ Protected Overrides Sub OnMouseClick(e As MouseEventArgs)
 
 The `OnMouseClick` subroutine allows users to interact with the graphical representation of bits by clicking on them. When a bit box is clicked, the corresponding bit's state is toggled, a sound is played for feedback, and the display is updated to reflect the change. This creates an interactive experience where users can manipulate binary values visually.
 
+---
+
+
+## 🖱️ Mouse Move
+
+
+
+
+```vbnet
+Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
+```
+- **Method Declaration**: This line defines the `OnMouseMove` method, which is protected and overrides the base class's method. It takes a parameter `e` of type `MouseEventArgs`, which contains information about the mouse movement event.
+
+```vbnet
+    MyBase.OnMouseMove(e)
+```
+- **Call Base Method**: This line calls the base class implementation of `OnMouseMove`, ensuring that any default behavior defined in the parent class is executed.
+
+```vbnet
+    Dim newHoverIndex As Integer = -1
+```
+- **Initialize Hover Index**: This line initializes a variable `newHoverIndex` to -1. This variable will be used to track the index of the bit box currently being hovered over.
+
+```vbnet
+    For i = 0 To 7
+```
+- **Loop Initialization**: This line starts a loop that will iterate from 0 to 7, allowing the code to check each of the 8 bit rectangles.
+
+```vbnet
+        If BitRects(i).Contains(e.Location) Then
+```
+- **Check Hover Location**: This line checks if the location of the mouse (`e.Location`) is within the rectangle corresponding to the current bit (`BitRects(i)`). If it is, the following code will execute.
+
+```vbnet
+            newHoverIndex = i
+```
+- **Update Hover Index**: If the mouse is over the current bit rectangle, this line updates `newHoverIndex` to the current index `i`.
+
+```vbnet
+            Exit For
+```
+- **Exit Loop**: This line exits the `For` loop immediately after finding the hovered bit box, preventing further checks since only one bit box can be hovered at a time.
+
+```vbnet
+        Next
+```
+- **End Loop**: This line marks the end of the `For` loop, which processes all 8 bit rectangles.
+
+```vbnet
+    If newHoverIndex <> HoveredBitIndex Then
+```
+- **Check for Hover Change**: This line checks if the newly detected hover index (`newHoverIndex`) is different from the previously stored hover index (`HoveredBitIndex`).
+
+```vbnet
+        HoveredBitIndex = newHoverIndex
+```
+- **Update Hovered Index**: If the hover index has changed, this line updates `HoveredBitIndex` to the new value.
+
+```vbnet
+        Me.Invalidate()
+```
+- **Invalidate Control**: This line calls `Invalidate()` on the current control (`Me`), marking it for redrawing. This will trigger a repaint, updating the visual representation of the bit boxes to reflect the new hover state.
+
+```vbnet
+    Cursor = If(HoveredBitIndex <> -1, Cursors.Hand, Cursors.Default)
+```
+- **Change Cursor**: This line sets the cursor based on whether a bit box is being hovered over:
+  - If `HoveredBitIndex` is not -1 (indicating a bit box is hovered), the cursor changes to a hand icon (`Cursors.Hand`).
+  - If no bit box is hovered (i.e., `HoveredBitIndex` is -1), the cursor defaults to the standard arrow icon (`Cursors.Default`).
+
+```vbnet
+End Sub
+```
+- **End Subroutine**: This line indicates the end of the `OnMouseMove` subroutine.
+
+
+The `OnMouseMove` subroutine updates the hover state of the bit boxes in response to mouse movement. It determines which bit box, if any, is currently being hovered over, updates the hover index, triggers a repaint of the control to reflect any changes, and adjusts the cursor to provide visual feedback to the user. This enhances the interactivity of the graphical user interface by indicating which bit box can be clicked.
+
+
 
 ---
 
