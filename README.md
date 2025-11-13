@@ -2,7 +2,6 @@
 
 A interactive app for learning binary numbers through visual feedback and sound.
 
-[Code Walkthrough](#code-walkthrough)
 
 
 ---
@@ -33,6 +32,7 @@ A interactive app for learning binary numbers through visual feedback and sound.
 - **Ambient Sound Loop**: Background "ComputerPulsation" audio loops continuously to create an immersive experience.
 - **Overlapping Sound Effects**: Instant playback of "CashCollected" sound on interaction, with overlapping enabled for responsiveness.
 
+[Code Walkthrough](#code-walkthrough)
 
 ---
 
