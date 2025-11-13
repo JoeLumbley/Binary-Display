@@ -317,24 +317,131 @@ The `OnMouseClick` subroutine allows users to interact with the graphical repres
 
 ## ⌨️ Keyboard Input
 
+
+
 ```vbnet
 Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
 ```
-
-- Handles Up/Down arrow keys to increment/decrement the binary value.
-
-```vbnet
-Dim currentValue = Convert.ToInt32(String.Join("", Bits.Select(Function(b) If(b, "1", "0"))), 2)
-```
-
-- Converts the bit array to an integer.
+- **Method Declaration**: This line defines the `OnKeyDown` method, which is protected and overrides the base class's method. It takes a parameter `e` of type `KeyEventArgs`, which contains information about the key event.
 
 ```vbnet
-If e.KeyCode = Keys.Up Then ...
-ElseIf e.KeyCode = Keys.Down Then ...
+    MyBase.OnKeyDown(e)
 ```
+- **Call Base Method**: This line calls the base class implementation of `OnKeyDown`, ensuring that any default behavior defined in the parent class is executed.
 
-- Adjusts the value and updates the bits.
+```vbnet
+    Dim currentValue = Convert.ToInt32(String.Join("", Bits.Select(Function(b) If(b, "1", "0"))), 2)
+```
+- **Current Value Calculation**: This line calculates the current integer value represented by the `Bits` array:
+  - `Bits.Select(Function(b) If(b, "1", "0"))` converts each boolean bit to a string ("1" for `True`, "0" for `False`).
+  - `String.Join("", ...)` concatenates these strings into a single binary string.
+  - `Convert.ToInt32(..., 2)` converts the binary string to an integer (base 2).
+
+```vbnet
+    If e.KeyCode = Keys.Up Then
+```
+- **Check for Up Arrow Key**: This line checks if the up arrow key was pressed.
+
+```vbnet
+        If currentValue < 255 Then
+```
+- **Upper Limit Check**: This line checks if the current value is less than 255 (the maximum value for an 8-bit binary number).
+
+```vbnet
+            currentValue += 1
+```
+- **Increment Value**: If the current value is less than 255, this line increments it by 1.
+
+```vbnet
+            Player.PlayOverlapping("CashCollected")
+```
+- **Play Sound**: This line plays a sound effect named "CashCollected" to provide feedback to the user when the value is incremented.
+
+```vbnet
+        End If
+```
+- **End If Statement**: This line marks the end of the conditional check for the up arrow key.
+
+```vbnet
+    ElseIf e.KeyCode = Keys.Down Then
+```
+- **Check for Down Arrow Key**: This line checks if the down arrow key was pressed.
+
+```vbnet
+        If currentValue > 0 Then
+```
+- **Lower Limit Check**: This line checks if the current value is greater than 0.
+
+```vbnet
+            currentValue -= 1
+```
+- **Decrement Value**: If the current value is greater than 0, this line decrements it by 1.
+
+```vbnet
+            Player.PlayOverlapping("CashCollected")
+```
+- **Play Sound**: This line plays the same sound effect "CashCollected" to provide feedback to the user when the value is decremented.
+
+```vbnet
+        End If
+```
+- **End If Statement**: This line marks the end of the conditional check for the down arrow key.
+
+```vbnet
+    Else
+```
+- **Else Condition**: This line begins the else block, which handles cases where neither the up nor down key was pressed.
+
+```vbnet
+        Return
+```
+- **Exit Method**: This line exits the subroutine early if neither the up nor down key is pressed, preventing further execution.
+
+```vbnet
+    End If
+```
+- **End If Statement**: This line closes the outer if-else structure.
+
+```vbnet
+    ' Update bits array
+```
+- **Comment**: This comment indicates that the following code will update the `Bits` array based on the new value.
+
+```vbnet
+    Dim binaryStr = Convert.ToString(currentValue, 2).PadLeft(8, "0"c)
+```
+- **Binary String Conversion**: This line converts the `currentValue` back to a binary string:
+  - `Convert.ToString(currentValue, 2)` converts the integer to a binary string.
+  - `.PadLeft(8, "0"c)` ensures the string is 8 characters long, padding with leading zeros if necessary.
+
+```vbnet
+    For i = 0 To 7
+```
+- **Loop Initialization**: This line starts a loop that will iterate from 0 to 7, allowing the code to update each bit in the `Bits` array.
+
+```vbnet
+        Bits(i) = binaryStr(i) = "1"
+```
+- **Update Bits Array**: This line updates the `Bits` array:
+  - `binaryStr(i) = "1"` checks if the `i`-th character of the binary string is "1".
+  - The result (a boolean value) is assigned to `Bits(i)`, setting the bit to `True` if the character is "1" and `False` otherwise.
+
+```vbnet
+    Next
+```
+- **End Loop**: This line marks the end of the `For` loop, which processes all 8 bits.
+
+```vbnet
+    Me.Invalidate()
+```
+- **Invalidate Control**: This line calls `Invalidate()` on the current control (`Me`), marking it for redrawing. This will trigger a repaint, updating the visual representation of the bit boxes to reflect the new state.
+
+```vbnet
+End Sub
+```
+- **End Subroutine**: This line indicates the end of the `OnKeyDown` subroutine.
+
+The `OnKeyDown` subroutine allows users to increment or decrement a binary value using the up and down arrow keys. When the up arrow is pressed, the value increases (up to a maximum of 255), and when the down arrow is pressed, the value decreases (down to a minimum of 0). The corresponding sound is played for feedback, and the visual representation of the bits is updated to reflect the new value.
 
 ---
 
