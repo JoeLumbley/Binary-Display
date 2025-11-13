@@ -59,8 +59,6 @@ Public Class Form1
 
         Graph.CompositingMode = Drawing2D.CompositingMode.SourceOver
 
-        Graph.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-
         Graph.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
 
         DrawBitBoxes()
@@ -291,7 +289,7 @@ Public Class Form1
             ' Draw border if hovered.
             If i = HoveredBitIndex Then
 
-                Using borderPen As New Pen(If(Bits(i), Color.DeepPink, Color.OrangeRed), BitSpacing / 3)
+                Using borderPen As New Pen(If(Bits(i), Color.DodgerBlue, Color.DodgerBlue), BitSpacing / 3)
                     borderPen.Alignment = Drawing2D.PenAlignment.Outset
                     Graph.DrawRectangle(borderPen, Rect)
                 End Using
