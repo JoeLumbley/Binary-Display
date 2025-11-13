@@ -258,20 +258,60 @@ DrawActiveValuesBreakdown()
 
 ## 🖱️ Mouse Click
 
+
 ```vbnet
 Protected Overrides Sub OnMouseClick(e As MouseEventArgs)
 ```
-
-- Toggles a bit when its box is clicked.
+- **Method Declaration**: This line defines the `OnMouseClick` method, which is protected and overrides the base class's method. It takes a parameter `e` of type `MouseEventArgs`, which contains information about the mouse click event.
 
 ```vbnet
-If BitRects(i).Contains(e.Location) Then
-    Player.PlayOverlapping("CashCollected")
-    Bits(i) = Not Bits(i)
-    Me.Invalidate()
+    MyBase.OnMouseClick(e)
 ```
+- **Call Base Method**: This line calls the base class implementation of `OnMouseClick`, ensuring that any default behavior defined in the parent class is executed.
 
-- Plays sound, flips the bit, and redraws.
+```vbnet
+    For i = 0 To 7
+```
+- **Loop Initialization**: This line starts a loop that will iterate from 0 to 7, allowing the code to check each of the 8 bit rectangles.
+
+```vbnet
+        If BitRects(i).Contains(e.Location) Then
+```
+- **Check Click Location**: This line checks if the location of the mouse click (`e.Location`) is within the rectangle corresponding to the current bit (`BitRects(i)`). If it is, the following code will execute.
+
+```vbnet
+            Player.PlayOverlapping("CashCollected")
+```
+- **Play Sound**: This line plays a sound effect named "CashCollected" using a `Player` object. This sound provides feedback to the user when they interact with a bit box.
+
+```vbnet
+            Bits(i) = Not Bits(i)
+```
+- **Toggle Bit State**: This line toggles the state of the bit at index `i`. If the bit was `True` (or `1`), it changes to `False` (or `0`), and vice versa. The `Not` operator inverts the boolean value.
+
+```vbnet
+            Me.Invalidate()
+```
+- **Invalidate Control**: This line calls `Invalidate()` on the current control (`Me`), which marks the control for redrawing. This will trigger a repaint, updating the visual representation of the bit boxes to reflect the new state.
+
+```vbnet
+            Exit For
+```
+- **Exit Loop**: This line exits the `For` loop immediately after toggling the bit state for the clicked rectangle, preventing further checks since only one bit can be toggled per click.
+
+```vbnet
+        Next
+```
+- **End Loop**: This line marks the end of the `For` loop, which will continue to the next index until all bits are processed, but will not execute further if a bit has already been toggled.
+
+```vbnet
+    End Sub
+```
+- **End Subroutine**: This line indicates the end of the `OnMouseClick` subroutine.
+
+
+The `OnMouseClick` subroutine allows users to interact with the graphical representation of bits by clicking on them. When a bit box is clicked, the corresponding bit's state is toggled, a sound is played for feedback, and the display is updated to reflect the change. This creates an interactive experience where users can manipulate binary values visually.
+
 
 ---
 
