@@ -363,13 +363,126 @@ Private Sub DrawDecimalValue()
 
 - Converts bits to decimal and draws it centered above the boxes.
 
+
+---
+
+
 ### Bit Boxes
 
 ```vbnet
 Private Sub DrawBitBoxes()
 ```
+- **Purpose**: This line defines a new subroutine named `DrawBitBoxes`. The `Private` keyword indicates that this subroutine can only be accessed within the same class or module.
 
-- Draws each box, binary digit, and place value.
+```vbnet
+    ' Draw bit boxes.
+```
+- **Comment**: This is a comment that describes what the following code will do. Comments are ignored by the compiler but are useful for developers to understand the code.
+
+```vbnet
+    For i = 0 To 7
+```
+- **Loop Initialization**: This line starts a loop that will iterate from 0 to 7, which means it will run 8 times (for each bit in a byte).
+
+```vbnet
+        Rect = BitRects(i)
+```
+- **Rectangle Assignment**: This line assigns the rectangle corresponding to the current bit (indexed by `i`) from an array called `BitRects`. Each rectangle represents the area where the bit will be drawn.
+
+```vbnet
+        Graph.FillRectangle(If(Bits(i), BitOnBrush, BitOffBrush), Rect)
+```
+- **Fill Rectangle**: This line fills the rectangle with a color based on the state of the bit (`Bits(i)`). If the bit is `True` (or `1`), it uses `BitOnBrush`; if `False` (or `0`), it uses `BitOffBrush`.
+
+```vbnet
+        ' Draw the binary digit centered horizontally and vertically inside of the bit boxes.
+```
+- **Comment**: Another comment indicating that the next lines will handle drawing the binary digit.
+
+```vbnet
+        Graph.DrawString(If(Bits(i), "1", "0"), BitBoxFont, If(Bits(i), TextOnBrush, TextOffBrush), 
+                          Rect.X + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Width) / 2,
+                          Rect.Y + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Height) / 2)
+```
+- **Draw String**: This complex line draws the binary digit (either "1" or "0") inside the rectangle:
+  - The first part `If(Bits(i), "1", "0")` checks the bit value.
+  - `BitBoxFont` specifies the font used for the text.
+  - `If(Bits(i), TextOnBrush, TextOffBrush)` chooses the text color based on the bit state.
+  - The `X` and `Y` coordinates are calculated to center the text within the box by subtracting half the width and height of the string from the rectangle's coordinates.
+
+```vbnet
+        ' Draw place value above each bit box.
+```
+- **Comment**: Indicates that the next lines will draw the place value for each bit.
+
+```vbnet
+        PlaceValue = CStr(2 ^ (7 - i))
+```
+- **Place Value Calculation**: This line calculates the place value of the bit. For a binary representation, the place value is determined as \(2^{(7 - i)}\). For example, when `i` is 0, the place value is 128 (or \(2^7\)).
+
+```vbnet
+        Graph.DrawString(PlaceValue, PlaceValueFont, PlaceValueBrush, 
+                          Rect.X + BitBoxSize \ 2, 
+                          Rect.Y - Me.ClientSize.Height \ 12, 
+                          AlineCenter)
+```
+- **Draw Place Value**: This line draws the calculated place value above the corresponding bit box:
+  - `PlaceValueFont` specifies the font for the place value text.
+  - `PlaceValueBrush` is the color used for the text.
+  - The coordinates position the place value above the box, adjusted by half the box size and a fraction of the client area height.
+
+```vbnet
+        ' Draw border if hovered.
+```
+- **Comment**: Indicates that the next lines will check if the bit box is hovered over and draw a border if it is.
+
+```vbnet
+        If i = HoveredBitIndex Then
+```
+- **Hover Check**: This line checks if the current index `i` matches the index of the hovered bit.
+
+```vbnet
+            Using borderPen As New Pen(If(Bits(i), Color.DeepPink, Color.OrangeRed), BitSpacing / 3)
+```
+- **Border Pen Creation**: This line creates a new pen for drawing borders. The color depends on the state of the bit (`Bits(i)`), and the pen width is set based on `BitSpacing`.
+
+```vbnet
+                borderPen.Alignment = Drawing2D.PenAlignment.Outset
+```
+- **Pen Alignment**: This line sets the alignment of the pen to be outside the rectangle, ensuring the border appears correctly.
+
+```vbnet
+                Graph.DrawRectangle(borderPen, Rect)
+```
+- **Draw Rectangle**: This line draws the border around the rectangle using the created pen.
+
+```vbnet
+            End Using
+```
+- **End Using Block**: This line indicates the end of the `Using` block for the `borderPen`, ensuring proper resource management.
+
+```vbnet
+        End If
+```
+- **End If Statement**: This line marks the end of the conditional check for hover.
+
+```vbnet
+    Next
+```
+- **End Loop**: This line marks the end of the `For` loop, which will continue to the next index until all bits are processed.
+
+```vbnet
+End Sub
+```
+- **End Subroutine**: This line indicates the end of the `DrawBitBoxes` subroutine.
+
+
+The `DrawBitBoxes` subroutine visually represents the bits of a byte as boxes filled with colors, displays the binary digits inside the boxes, shows their place values above, and highlights the box when hovered over. This code is part of a graphical user interface that helps users visualize binary data in a clear and interactive way.
+
+
+---
+
+
 
 ### Breakdown
 
