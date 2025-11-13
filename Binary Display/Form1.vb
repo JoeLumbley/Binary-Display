@@ -290,8 +290,11 @@ Public Class Form1
             If i = HoveredBitIndex Then
 
                 Using borderPen As New Pen(If(Bits(i), Color.DodgerBlue, Color.DodgerBlue), BitSpacing / 3)
+
                     borderPen.Alignment = Drawing2D.PenAlignment.Outset
+
                     Graph.DrawRectangle(borderPen, Rect)
+
                 End Using
 
             End If
