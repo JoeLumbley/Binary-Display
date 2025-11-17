@@ -225,10 +225,14 @@ Public Class Form1
     End Sub
 
     Private Sub UpdateFonts()
+        'Dim screenScaling As New ScreenScaling()
+        'Dim scalingFactor As Integer = screenScaling.GetScalingFactor()
 
-        Dim zoomPercent As Integer = DisplayScaling.GetZoomPercentage()
+        'System.Windows.Forms.Screen.PrimaryScreen.s
 
-        If zoomPercent = 100 Then
+        Dim scaleFactor As Single = Me.DeviceDpi / 96.0F ' 96 DPI is the default for 100% scaling
+
+        If scaleFactor = 1 Then
             BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 13))
             PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
             BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
@@ -638,28 +642,58 @@ End Structure
 'Imports System.Runtime.InteropServices
 'Imports System.Drawing
 
-Public Class DisplayScaling
+'Public Class DisplayScaling
 
-    Private Enum DeviceCap
-        VERTRES = 10
-        DESKTOPVERTRES = 117
-    End Enum
+'    Private Enum DeviceCap
+'        VERTRES = 10
+'        DESKTOPVERTRES = 117
+'    End Enum
 
+'    <DllImport("gdi32.dll")>
+'    Private Shared Function GetDeviceCaps(hdc As IntPtr, nIndex As Integer) As Integer
+'    End Function
+
+'    Public Shared Function GetScalingFactor() As Single
+'        Using g As Graphics = Graphics.FromHwnd(IntPtr.Zero)
+'            Dim hdc As IntPtr = g.GetHdc()
+'            Dim logicalHeight As Integer = GetDeviceCaps(hdc, DeviceCap.VERTRES)
+'            Dim physicalHeight As Integer = GetDeviceCaps(hdc, DeviceCap.DESKTOPVERTRES)
+'            g.ReleaseHdc(hdc)
+'            Return CSng(physicalHeight) / CSng(logicalHeight)
+'        End Using
+'    End Function
+
+'    Public Shared Function GetZoomPercentage() As Integer
+'        Return CInt(GetScalingFactor() * 100)
+'    End Function
+'End Class
+
+'Imports System.Runtime.InteropServices
+
+Public Class ScreenScaling
     <DllImport("gdi32.dll")>
     Private Shared Function GetDeviceCaps(hdc As IntPtr, nIndex As Integer) As Integer
     End Function
 
-    Public Shared Function GetScalingFactor() As Single
-        Using g As Graphics = Graphics.FromHwnd(IntPtr.Zero)
-            Dim hdc As IntPtr = g.GetHdc()
-            Dim logicalHeight As Integer = GetDeviceCaps(hdc, DeviceCap.VERTRES)
-            Dim physicalHeight As Integer = GetDeviceCaps(hdc, DeviceCap.DESKTOPVERTRES)
-            g.ReleaseHdc(hdc)
-            Return CSng(physicalHeight) / CSng(logicalHeight)
-        End Using
-    End Function
+    Private Const LOGPIXELSX As Integer = 88
+    Private Const LOGPIXELSY As Integer = 90
 
-    Public Shared Function GetZoomPercentage() As Integer
-        Return CInt(GetScalingFactor() * 100)
+    Public Function GetScalingFactor() As Integer
+        Dim hdc As IntPtr = Graphics.FromHwnd(IntPtr.Zero).GetHdc()
+        Dim dpiX As Integer = GetDeviceCaps(hdc, LOGPIXELSX)
+        Dim dpiY As Integer = GetDeviceCaps(hdc, LOGPIXELSY)
+        Graphics.FromHwnd(IntPtr.Zero).ReleaseHdc(hdc)
+
+        ' Calculate the scaling factor as a percentage
+        Dim scalingFactor As Integer = CInt((dpiX / 96.0) * 100)
+        Return scalingFactor
     End Function
 End Class
+
+'Module Program
+'    Sub Main()
+'        Dim screenScaling As New ScreenScaling()
+'        Dim scalingFactor As Integer = screenScaling.GetScalingFactor()
+'        Console.WriteLine("Current Display Scaling Factor: " & scalingFactor & "%")
+'    End Sub
+'End Module
