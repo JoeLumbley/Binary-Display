@@ -239,9 +239,9 @@ Public Class Form1
             DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
         Else
             BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
-            PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 23))
+            PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
             BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
-            DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
+            DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 10))
         End If
 
     End Sub
