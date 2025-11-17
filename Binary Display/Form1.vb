@@ -274,15 +274,29 @@ Public Class Form1
                              Rect.X + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Width) / 2,
                              Rect.Y + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Height) / 2)
 
+            '' Draw place value above each bit box.
+            'PlaceValue = CStr(2 ^ (7 - i))
+
+            'Graph.DrawString(PlaceValue,
+            '                 PlaceValueFont,
+            '                 PlaceValueBrush,
+            '                 Rect.X + BitBoxSize \ 2,
+            '                 Rect.Y - Me.ClientSize.Height \ 12,
+            '                 AlineCenter)
+
+
             ' Draw place value above each bit box.
             PlaceValue = CStr(2 ^ (7 - i))
 
+            Dim currentPlaceValueBrush As Brush = If(i = HoveredBitIndex, Brushes.Orange, PlaceValueBrush)
+
             Graph.DrawString(PlaceValue,
-                             PlaceValueFont,
-                             PlaceValueBrush,
-                             Rect.X + BitBoxSize \ 2,
-                             Rect.Y - Me.ClientSize.Height \ 12,
-                             AlineCenter)
+                 PlaceValueFont,
+                 currentPlaceValueBrush,
+                 Rect.X + BitBoxSize \ 2,
+                 Rect.Y - Me.ClientSize.Height \ 12,
+                 AlineCenter)
+
 
             ' Draw border if hovered.
             If i = HoveredBitIndex Then
