@@ -207,26 +207,54 @@ End Sub
 
 ## 🎨 Paint Event
 
+
 ```vbnet
 Protected Overrides Sub OnPaint(e As PaintEventArgs)
 ```
-
-- Called whenever the form needs to redraw.
-
-```vbnet
-Graph = e.Graphics
-Graph.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
-```
-
-- Sets up smooth text rendering.
+- **Method Declaration**: This line defines the `OnPaint` method, which is protected and overrides the base class's method. It takes a parameter `e` of type `PaintEventArgs`, which contains information about the paint event, including the graphics object used for drawing.
 
 ```vbnet
-DrawBitBoxes()
-DrawDecimalValue()
-DrawActiveValuesBreakdown()
+    MyBase.OnPaint(e)
 ```
+- **Call Base Method**: This line calls the base class implementation of `OnPaint`, ensuring that any default behavior defined in the parent class is executed before any custom painting occurs.
 
-- Draws the bit boxes, decimal value, and breakdown.
+```vbnet
+    Graph = e.Graphics
+```
+- **Assign Graphics Object**: This line assigns the `Graphics` object from the `PaintEventArgs` (`e.Graphics`) to a class-level variable `Graph`. This allows for easy access to the graphics context for subsequent drawing operations.
+
+```vbnet
+    Graph.CompositingMode = Drawing2D.CompositingMode.SourceOver
+```
+- **Set Compositing Mode**: This line sets the compositing mode of the graphics object to `SourceOver`. This mode ensures that the source (the drawn elements) is blended with the destination (the existing content) based on their alpha values, allowing for proper transparency handling.
+
+```vbnet
+    Graph.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+```
+- **Set Text Rendering Hint**: This line sets the text rendering hint to `AntiAlias`, which improves the quality of rendered text by smoothing the edges. This results in a more visually appealing appearance for any text drawn on the control.
+
+```vbnet
+    DrawBitBoxes()
+```
+- **Draw Bit Boxes**: This line calls a method named `DrawBitBoxes()`, which is responsible for rendering the graphical representation of the bit boxes. This method likely iterates through the `Bits` array and draws each corresponding rectangle.
+
+```vbnet
+    DrawDecimalValue()
+```
+- **Draw Decimal Value**: This line calls a method named `DrawDecimalValue()`, which is responsible for rendering the current decimal value represented by the bits. This could involve converting the binary representation to a decimal and displaying it on the control.
+
+```vbnet
+    DrawActiveValuesBreakdown()
+```
+- **Draw Active Values Breakdown**: This line calls a method named `DrawActiveValuesBreakdown()`, which likely renders additional information about the active values or the state of the bits. This could include visual indicators or textual descriptions of the bits that are currently set to `True`.
+
+```vbnet
+End Sub
+```
+- **End Subroutine**: This line indicates the end of the `OnPaint` subroutine.
+
+
+The `OnPaint` subroutine is responsible for rendering the visual elements of the control. It initializes the graphics context, sets rendering properties for better visual quality, and calls specific methods to draw the bit boxes, the decimal value, and any additional information about the active values. This method is crucial for ensuring that the graphical representation of the data is updated and displayed correctly whenever the control needs to be repainted.
 
 ---
 
