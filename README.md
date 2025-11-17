@@ -4,9 +4,9 @@ A interactive app for learning binary numbers through visual feedback and sound.
 
 
 
+<img width="1920" height="1080" alt="006" src="https://github.com/user-attachments/assets/694a3165-eef6-475d-9dca-89ea89a8ff06" />
 
 
-<img width="1920" height="1080" alt="003" src="https://github.com/user-attachments/assets/23ac32f7-21b8-40a3-9be6-eaf5d428fb8e" />
 
 ---
 
@@ -751,6 +751,7 @@ Private Sub CreateFileFromResource(filepath As String, resource As Byte())
 
 
 
+<img width="1920" height="1080" alt="007" src="https://github.com/user-attachments/assets/fb979af1-196f-41cf-985d-c344796152f0" />
 
 
 
@@ -758,7 +759,6 @@ Private Sub CreateFileFromResource(filepath As String, resource As Byte())
 
 
 
-<img width="1920" height="1080" alt="005" src="https://github.com/user-attachments/assets/715f8259-cfb2-4b72-95eb-895418321963" />
 
 
 
