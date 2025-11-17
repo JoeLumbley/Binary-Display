@@ -240,7 +240,7 @@ Public Class Form1
         Else
             BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
             PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 23))
-            BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 24))
+            BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
             DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
         End If
 
