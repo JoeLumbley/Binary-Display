@@ -225,10 +225,21 @@ Public Class Form1
     End Sub
 
     Private Sub UpdateFonts()
-        BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
-        PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 23))
-        BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 24))
-        DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
+
+        Dim zoomPercent As Integer = DisplayScaling.GetZoomPercentage()
+
+        If zoomPercent = 100 Then
+            BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 13))
+            PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
+            BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
+            DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
+        Else
+            BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
+            PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 23))
+            BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 24))
+            DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
+        End If
+
     End Sub
 
     Private Sub UpdateStartPositions()
@@ -620,3 +631,35 @@ Public Structure AudioPlayer
     End Sub
 
 End Structure
+
+
+
+
+'Imports System.Runtime.InteropServices
+'Imports System.Drawing
+
+Public Class DisplayScaling
+
+    Private Enum DeviceCap
+        VERTRES = 10
+        DESKTOPVERTRES = 117
+    End Enum
+
+    <DllImport("gdi32.dll")>
+    Private Shared Function GetDeviceCaps(hdc As IntPtr, nIndex As Integer) As Integer
+    End Function
+
+    Public Shared Function GetScalingFactor() As Single
+        Using g As Graphics = Graphics.FromHwnd(IntPtr.Zero)
+            Dim hdc As IntPtr = g.GetHdc()
+            Dim logicalHeight As Integer = GetDeviceCaps(hdc, DeviceCap.VERTRES)
+            Dim physicalHeight As Integer = GetDeviceCaps(hdc, DeviceCap.DESKTOPVERTRES)
+            g.ReleaseHdc(hdc)
+            Return CSng(physicalHeight) / CSng(logicalHeight)
+        End Using
+    End Function
+
+    Public Shared Function GetZoomPercentage() As Integer
+        Return CInt(GetScalingFactor() * 100)
+    End Function
+End Class
