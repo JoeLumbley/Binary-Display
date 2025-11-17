@@ -14,7 +14,6 @@ Public Class Form1
     Private BitBoxesTop As Integer = 0
 
     Private BitOnBrush = Brushes.Chartreuse
-    'Private BitOffBrush = Brushes.DarkGray
     Private BitOffBrush = New SolidBrush(Color.FromArgb(255, 195, 195, 195))
 
     Private TextOnBrush = Brushes.Black
