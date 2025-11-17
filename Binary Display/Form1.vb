@@ -17,7 +17,6 @@ Public Class Form1
     Private BitOffBrush = New SolidBrush(Color.FromArgb(255, 195, 195, 195))
 
     Private TextOnBrush = Brushes.Black
-    'Private TextOffBrush = Brushes.Gray
     Private TextOffBrush = New SolidBrush(Color.FromArgb(255, 75, 75, 75))
 
     Private BitBoxFont As New Font("Consolas", 12)
