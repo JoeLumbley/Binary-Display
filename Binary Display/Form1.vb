@@ -229,23 +229,23 @@ Public Class Form1
         Dim scaleFactor As Single = Me.DeviceDpi / 96.0F ' 96 DPI is the default for 100% scaling
 
         Select Case scaleFactor
-            Case 1.0F To 1.25F ' 100% to 125%
+            Case 1.0F To 1.24F ' 100% to 125%
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 12))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 18))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
-            Case 1.25F To 1.5F
+            Case 1.25F To 1.49F
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 23))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 10))
-            Case 1.5F To 1.75F
+            Case 1.5F To 1.74F
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 18))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 28))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 30))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 12))
 
-            Case 1.75F To 2.0F
+            Case 1.75F To 1.99F
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 22))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 32))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 35))
