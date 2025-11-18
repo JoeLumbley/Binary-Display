@@ -248,12 +248,6 @@ Public Class Form1
 
     End Sub
 
-
-
-
-
-
-
     Private Sub UpdateStartPositions()
         BitBoxesLeft = (Me.ClientSize.Width - (8 * (BitBoxSize + BitSpacing) - BitSpacing)) \ 2
         BitBoxesTop = (Me.ClientSize.Height) \ 2 - (BitBoxSize \ 2)
@@ -297,27 +291,17 @@ Public Class Form1
                              Rect.X + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Width) / 2,
                              Rect.Y + (BitBoxSize - Graph.MeasureString(If(Bits(i), "1", "0"), BitBoxFont).Height) / 2)
 
-
-
-
             ' Draw place value above each bit box.
             PlaceValue = CStr(2 ^ (7 - i))
 
             Dim currentPlaceValueBrush As Brush = If(i = HoveredBitIndex, Brushes.Orange, PlaceValueBrush)
 
-            'Graph.DrawString(PlaceValue,
-            '     PlaceValueFont,
-            '     currentPlaceValueBrush,
-            '     Rect.X + BitBoxSize \ 2,
-            '     Rect.Y - Me.ClientSize.Height \ 12,
-            '     AlineCenter)
             Graph.DrawString(PlaceValue,
                  PlaceValueFont,
                  currentPlaceValueBrush,
                  Rect.X + BitBoxSize \ 2,
                  Rect.Y - Graph.MeasureString(PlaceValue, PlaceValueFont).Height,
                  AlineCenter)
-
 
             ' Draw border if hovered.
             If i = HoveredBitIndex Then
@@ -351,11 +335,6 @@ Public Class Form1
 
             Breakdown = String.Join(" + ", ActiveValues)
 
-            'Graph.DrawString($"{Breakdown} = {DecimalVal}",
-            '                 BreakdownFont, BreakdownBrush,
-            '                 ClientSize.Width \ 2,
-            '                 BitBoxesTop + Me.ClientSize.Height \ 4,
-            '                 AlineCenter)
             Graph.DrawString($"{Breakdown} = {DecimalVal}",
                              BreakdownFont, BreakdownBrush,
                              ClientSize.Width \ 2,
