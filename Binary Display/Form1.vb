@@ -240,10 +240,10 @@ Public Class Form1
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 10))
             Case = 1.5F
-                BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 16))
-                PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
-                BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
-                DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 11))
+                BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 18))
+                PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 28))
+                BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 30))
+                DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 12))
         End Select
 
     End Sub
