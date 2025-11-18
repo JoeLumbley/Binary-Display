@@ -236,7 +236,7 @@ Public Class Form1
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
             Case = 1.25F
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
-                PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
+                PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 23))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 10))
             Case = 1.5F
