@@ -234,12 +234,12 @@ Public Class Form1
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 18))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
-            Case = 1.5F
+            Case = 1.25F
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 10))
-            Case = 2.0F
+            Case = 1.5F
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 16))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
