@@ -305,11 +305,17 @@ Public Class Form1
 
             Dim currentPlaceValueBrush As Brush = If(i = HoveredBitIndex, Brushes.Orange, PlaceValueBrush)
 
+            'Graph.DrawString(PlaceValue,
+            '     PlaceValueFont,
+            '     currentPlaceValueBrush,
+            '     Rect.X + BitBoxSize \ 2,
+            '     Rect.Y - Me.ClientSize.Height \ 12,
+            '     AlineCenter)
             Graph.DrawString(PlaceValue,
                  PlaceValueFont,
                  currentPlaceValueBrush,
                  Rect.X + BitBoxSize \ 2,
-                 Rect.Y - Me.ClientSize.Height \ 12,
+                 Rect.Y - Graph.MeasureString(PlaceValue, PlaceValueFont).Height,
                  AlineCenter)
 
 
@@ -345,10 +351,15 @@ Public Class Form1
 
             Breakdown = String.Join(" + ", ActiveValues)
 
+            'Graph.DrawString($"{Breakdown} = {DecimalVal}",
+            '                 BreakdownFont, BreakdownBrush,
+            '                 ClientSize.Width \ 2,
+            '                 BitBoxesTop + Me.ClientSize.Height \ 4,
+            '                 AlineCenter)
             Graph.DrawString($"{Breakdown} = {DecimalVal}",
                              BreakdownFont, BreakdownBrush,
                              ClientSize.Width \ 2,
-                             BitBoxesTop + Me.ClientSize.Height \ 4,
+                             BitBoxesTop + BitBoxSize + BitSpacing,
                              AlineCenter)
 
         End If
