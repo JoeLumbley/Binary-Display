@@ -224,27 +224,50 @@ Public Class Form1
 
     End Sub
 
+    'Private Sub UpdateFonts()
+
+    '    Dim scaleFactor As Single = Me.DeviceDpi / 96.0F ' 96 DPI is the default for 100% scaling
+
+    '    If scaleFactor = 1 Then
+    '        BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 12))
+    '        PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
+    '        BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
+    '        DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
+    '    Else
+    '        BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
+    '        PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
+    '        BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
+    '        DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 10))
+    '    End If
+
+    'End Sub
+
+
     Private Sub UpdateFonts()
-        'Dim screenScaling As New ScreenScaling()
-        'Dim scalingFactor As Integer = screenScaling.GetScalingFactor()
-
-        'System.Windows.Forms.Screen.PrimaryScreen.s
-
         Dim scaleFactor As Single = Me.DeviceDpi / 96.0F ' 96 DPI is the default for 100% scaling
 
-        If scaleFactor = 1 Then
-            BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 13))
-            PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
-            BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
-            DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
-        Else
-            BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
-            PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
-            BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
-            DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 10))
-        End If
+        ' Base font sizes
+        Dim baseBitBoxFontSize As Single = 20
+        Dim basePlaceValueFontSize As Single = 6
+        Dim baseBreakdownFontSize As Single = 6
+        Dim baseDecimalFontSize As Single = 12
 
+        ' Calculate dynamic font sizes based on scale factor
+        Dim adjustedBitBoxFontSize As Single = Math.Max(baseBitBoxFontSize * scaleFactor, Me.ClientSize.Height / 12)
+        Dim adjustedPlaceValueFontSize As Single = Math.Max(basePlaceValueFontSize * scaleFactor, Me.ClientSize.Height / 20)
+        Dim adjustedBreakdownFontSize As Single = Math.Max(baseBreakdownFontSize * scaleFactor, Me.ClientSize.Height / 20)
+        Dim adjustedDecimalFontSize As Single = Math.Max(baseDecimalFontSize * scaleFactor, Me.ClientSize.Height / 9)
+
+        ' Assign the calculated font sizes
+        BitBoxFont = New Font("Consolas", adjustedBitBoxFontSize)
+        PlaceValueFont = New Font("Consolas", adjustedPlaceValueFontSize)
+        BreakdownFont = New Font("Consolas", adjustedBreakdownFontSize)
+        DecimalFont = New Font("Consolas", adjustedDecimalFontSize)
     End Sub
+
+
+
+
 
     Private Sub UpdateStartPositions()
         BitBoxesLeft = (Me.ClientSize.Width - (8 * (BitBoxSize + BitSpacing) - BitSpacing)) \ 2
