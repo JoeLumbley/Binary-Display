@@ -224,46 +224,31 @@ Public Class Form1
 
     End Sub
 
-    'Private Sub UpdateFonts()
-
-    '    Dim scaleFactor As Single = Me.DeviceDpi / 96.0F ' 96 DPI is the default for 100% scaling
-
-    '    If scaleFactor = 1 Then
-    '        BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 12))
-    '        PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
-    '        BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
-    '        DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
-    '    Else
-    '        BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
-    '        PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
-    '        BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
-    '        DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 10))
-    '    End If
-
-    'End Sub
-
-
     Private Sub UpdateFonts()
+
         Dim scaleFactor As Single = Me.DeviceDpi / 96.0F ' 96 DPI is the default for 100% scaling
 
-        ' Base font sizes
-        Dim baseBitBoxFontSize As Single = 20
-        Dim basePlaceValueFontSize As Single = 6
-        Dim baseBreakdownFontSize As Single = 6
-        Dim baseDecimalFontSize As Single = 12
+        Select Case scaleFactor
+            Case = 1.0F
+                BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 12))
+                PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 18))
+                BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
+                DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
+            Case = 1.5F
+                BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
+                PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
+                BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
+                DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 10))
+            Case = 2.0F
+                BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 16))
+                PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
+                BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
+                DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 11))
+        End Select
 
-        ' Calculate dynamic font sizes based on scale factor
-        Dim adjustedBitBoxFontSize As Single = Math.Max(baseBitBoxFontSize * scaleFactor, Me.ClientSize.Height / 12)
-        Dim adjustedPlaceValueFontSize As Single = Math.Max(basePlaceValueFontSize * scaleFactor, Me.ClientSize.Height / 20)
-        Dim adjustedBreakdownFontSize As Single = Math.Max(baseBreakdownFontSize * scaleFactor, Me.ClientSize.Height / 20)
-        Dim adjustedDecimalFontSize As Single = Math.Max(baseDecimalFontSize * scaleFactor, Me.ClientSize.Height / 9)
-
-        ' Assign the calculated font sizes
-        BitBoxFont = New Font("Consolas", adjustedBitBoxFontSize)
-        PlaceValueFont = New Font("Consolas", adjustedPlaceValueFontSize)
-        BreakdownFont = New Font("Consolas", adjustedBreakdownFontSize)
-        DecimalFont = New Font("Consolas", adjustedDecimalFontSize)
     End Sub
+
+
 
 
 
@@ -658,65 +643,3 @@ Public Structure AudioPlayer
     End Sub
 
 End Structure
-
-
-
-
-'Imports System.Runtime.InteropServices
-'Imports System.Drawing
-
-'Public Class DisplayScaling
-
-'    Private Enum DeviceCap
-'        VERTRES = 10
-'        DESKTOPVERTRES = 117
-'    End Enum
-
-'    <DllImport("gdi32.dll")>
-'    Private Shared Function GetDeviceCaps(hdc As IntPtr, nIndex As Integer) As Integer
-'    End Function
-
-'    Public Shared Function GetScalingFactor() As Single
-'        Using g As Graphics = Graphics.FromHwnd(IntPtr.Zero)
-'            Dim hdc As IntPtr = g.GetHdc()
-'            Dim logicalHeight As Integer = GetDeviceCaps(hdc, DeviceCap.VERTRES)
-'            Dim physicalHeight As Integer = GetDeviceCaps(hdc, DeviceCap.DESKTOPVERTRES)
-'            g.ReleaseHdc(hdc)
-'            Return CSng(physicalHeight) / CSng(logicalHeight)
-'        End Using
-'    End Function
-
-'    Public Shared Function GetZoomPercentage() As Integer
-'        Return CInt(GetScalingFactor() * 100)
-'    End Function
-'End Class
-
-'Imports System.Runtime.InteropServices
-
-Public Class ScreenScaling
-    <DllImport("gdi32.dll")>
-    Private Shared Function GetDeviceCaps(hdc As IntPtr, nIndex As Integer) As Integer
-    End Function
-
-    Private Const LOGPIXELSX As Integer = 88
-    Private Const LOGPIXELSY As Integer = 90
-
-    Public Function GetScalingFactor() As Integer
-        Dim hdc As IntPtr = Graphics.FromHwnd(IntPtr.Zero).GetHdc()
-        Dim dpiX As Integer = GetDeviceCaps(hdc, LOGPIXELSX)
-        Dim dpiY As Integer = GetDeviceCaps(hdc, LOGPIXELSY)
-        Graphics.FromHwnd(IntPtr.Zero).ReleaseHdc(hdc)
-
-        ' Calculate the scaling factor as a percentage
-        Dim scalingFactor As Integer = CInt((dpiX / 96.0) * 100)
-        Return scalingFactor
-    End Function
-End Class
-
-'Module Program
-'    Sub Main()
-'        Dim screenScaling As New ScreenScaling()
-'        Dim scalingFactor As Integer = screenScaling.GetScalingFactor()
-'        Console.WriteLine("Current Display Scaling Factor: " & scalingFactor & "%")
-'    End Sub
-'End Module
