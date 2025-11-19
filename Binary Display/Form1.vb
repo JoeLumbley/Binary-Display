@@ -189,7 +189,7 @@ Public Class Form1
 
         Player.AddSound("ComputerPulsation", FilePath)
 
-        Player.SetVolume("ComputerPulsation", 40)
+        Player.SetVolume("ComputerPulsation", 5)
 
         MinimumSize = New Size(720, 480)
 
