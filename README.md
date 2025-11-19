@@ -105,7 +105,7 @@ Private Bits(7) As Boolean
 Private BitRects(7) As Rectangle
 ```
 
-- `BinaryStr`: Holds the current binary string (e.g., `"01010101"`).
+- `BinaryStr`: Holds the current binary string (e.g., `"01001001"`).
 - `Bits`: Boolean array representing each bit (True = 1, False = 0).
 - `BitRects`: Rectangles for drawing clickable bit boxes.
 
