@@ -229,29 +229,37 @@ Public Class Form1
         Dim scaleFactor As Single = Me.DeviceDpi / 96.0F ' 96 DPI is the default for 100% scaling
 
         Select Case scaleFactor
-            Case 1.0F To 1.24F ' 100% to 125%
+
+            Case 1.0F To 1.24F ' 100% to 124%
+
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 12))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 18))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
-            Case 1.25F To 1.49F
+
+            Case 1.25F To 1.49F ' 125% to 149%
+
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 15))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 23))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 25))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 10))
-            Case 1.5F To 1.74F
+
+            Case 1.5F To 1.74F ' 150% to 174%
+
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 18))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 28))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 30))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 12))
 
-            Case 1.75F To 1.99F
+            Case 1.75F To 1.99F ' 175% to 199%
+
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 22))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 32))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 35))
                 DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 14))
 
-            Case 2.0F To 3.0F
+            Case 2.0F To 3.0F ' 200% to 300%
+
                 BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 25))
                 PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 35))
                 BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 40))
@@ -262,13 +270,17 @@ Public Class Form1
     End Sub
 
     Private Sub UpdateStartPositions()
+
         BitBoxesLeft = (Me.ClientSize.Width - (8 * (BitBoxSize + BitSpacing) - BitSpacing)) \ 2
         BitBoxesTop = (Me.ClientSize.Height) \ 2 - (BitBoxSize \ 2)
+
     End Sub
 
     Private Sub UpdateSizes()
+
         BitBoxSize = Math.Max(32, Me.ClientSize.Height \ 6)
         BitSpacing = Math.Max(5, Me.ClientSize.Height \ 42)
+
     End Sub
 
     Private Sub DrawDecimalValue()
