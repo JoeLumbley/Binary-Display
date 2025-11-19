@@ -579,6 +579,77 @@ Private Sub UpdateSizes()
 
 - Modular functions to calculate layout and font sizes based on window dimensions.
 
+
+
+---
+
+### Fonts
+
+```vbnet
+Private Sub UpdateFonts()
+```
+- **Method Declaration**: This line defines the `UpdateFonts` method as a private subroutine. It does not return a value and is intended for internal use within the class.
+
+```vbnet
+    Dim scaleFactor As Single = Me.DeviceDpi / 96.0F ' 96 DPI is the default for 100% scaling
+```
+- **Calculate Scale Factor**: This line calculates the `scaleFactor` by dividing the device's DPI (`Me.DeviceDpi`) by 96.0F, which is the standard DPI for 100% scaling. The resulting value indicates how much the display is scaled relative to the default.
+
+```vbnet
+    Select Case scaleFactor
+```
+- **Begin Select Case**: This line starts a `Select Case` statement to evaluate the `scaleFactor` and execute different font size settings based on its value.
+
+```vbnet
+        Case 1.0F To 1.24F ' 100% to 125%
+```
+- **Case for 100% to 125% Scaling**: This case handles scenarios where the scaling factor is between 1.0 and 1.24. It defines the font sizes for various UI elements.
+
+```vbnet
+            BitBoxFont = New Font("Consolas", Math.Max(20, Me.ClientSize.Height \ 12))
+            PlaceValueFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 18))
+            BreakdownFont = New Font("Consolas", Math.Max(6, Me.ClientSize.Height \ 20))
+            DecimalFont = New Font("Consolas", Math.Max(12, Me.ClientSize.Height \ 9))
+```
+- **Font Assignments**: These lines create new `Font` objects for different UI elements using the "Consolas" font family. The font size is determined by taking the maximum of a specified value or a calculation based on the control's height. This ensures that the fonts scale appropriately with the control size.
+
+```vbnet
+        Case 1.25F To 1.49F
+```
+- **Case for 125% to 149% Scaling**: Similar to the previous case, this block defines font sizes for a slightly larger scaling range.
+
+```vbnet
+        Case 1.5F To 1.74F
+```
+- **Case for 150% to 174% Scaling**: This case adjusts the font sizes for a higher scaling factor.
+
+```vbnet
+        Case 1.75F To 1.99F
+```
+- **Case for 175% to 199% Scaling**: This block sets the font sizes for even larger scaling factors.
+
+```vbnet
+        Case 2.0F To 3.0F
+```
+- **Case for 200% to 300% Scaling**: This case handles extreme scaling scenarios, ensuring that even at high DPI settings, the fonts remain legible.
+
+```vbnet
+    End Select
+```
+- **End Select Case**: This line marks the end of the `Select Case` statement.
+
+```vbnet
+End Sub
+```
+- **End Subroutine**: This line indicates the end of the `UpdateFonts` subroutine.
+
+
+The `UpdateFonts` subroutine dynamically adjusts the font sizes for various components of the user interface based on the current DPI scaling factor. By using the `Select Case` structure, it provides a clear and organized way to set different font sizes for different scaling scenarios, ensuring that text remains readable and visually appealing across various display settings. This is critical for applications that need to support a wide range of screen resolutions and user preferences.
+
+
+
+
+
 ---
 
 ## 🧾 Drawing Functions
