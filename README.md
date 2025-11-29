@@ -4,7 +4,7 @@ A interactive app for learning binary numbers through visual feedback and sound.
 
 
 
-<img width="1920" height="1080" alt="006" src="https://github.com/user-attachments/assets/694a3165-eef6-475d-9dca-89ea89a8ff06" />
+<img width="1920" height="1080" alt="008" src="https://github.com/user-attachments/assets/369eedb0-ed8e-4156-89f1-4e802a0855f5" />
 
 
 
@@ -105,7 +105,7 @@ Private Bits(7) As Boolean
 Private BitRects(7) As Rectangle
 ```
 
-- `BinaryStr`: Holds the current binary string (e.g., `"01010101"`).
+- `BinaryStr`: Holds the current binary string (e.g., `"01001001"`).
 - `Bits`: Boolean array representing each bit (True = 1, False = 0).
 - `BitRects`: Rectangles for drawing clickable bit boxes.
 
@@ -822,7 +822,7 @@ Private Sub CreateFileFromResource(filepath As String, resource As Byte())
 
 
 
-<img width="1920" height="1080" alt="007" src="https://github.com/user-attachments/assets/fb979af1-196f-41cf-985d-c344796152f0" />
+<img width="1920" height="1080" alt="010" src="https://github.com/user-attachments/assets/328b2153-c32e-456e-90bf-fac9fbdb9e0a" />
 
 
 
